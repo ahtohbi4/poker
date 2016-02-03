@@ -30,6 +30,14 @@ require([
         cardDeck.reset();
 
         $('body')
+            .append(cardDeck.getCards(6).join(', '))
+            .append('<br>')
+            .append(cardDeck.cards.join(', '))
+            .append('<hr>');
+
+        cardDeck.reset();
+
+        $('body')
             .append(cardDeck.cards.join(', '))
             .append('<hr>');
     }

@@ -101,6 +101,7 @@ define(function () {
 
     /**
      * @method
+     * @returns {CardDeck}
      * @public
      */
     CardDeck.prototype.reset = function () {
@@ -121,6 +122,7 @@ define(function () {
 
     /**
      * @method
+     * @returns {CardDeck}
      * @public
      */
     CardDeck.prototype.shuffle = function () {
@@ -137,12 +139,31 @@ define(function () {
 
     /**
      * @method
+     * @returns {object}
      * @public
      */
     CardDeck.prototype.getCard = function () {
         var result;
 
         result = this.cards.pop();
+
+        return result;
+    };
+
+    /**
+     * @method
+     * @param {number} amount
+     * @returns {array}
+     * @public
+     */
+    CardDeck.prototype.getCards = function (amount) {
+        var result = [];
+
+        while (amount--) {
+            var topCard = this.cards.pop();
+
+            result.push(topCard);
+        }
 
         return result;
     };
