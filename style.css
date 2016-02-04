@@ -1,0 +1,22 @@
+html {
+    height: 100%
+    margin: 0;
+    padding: 0;
+}
+body {
+    height: 100%
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+}
+
+.poker {
+    min-height: 200px;
+}
+.poker__count {
+    position: relative;
+}
+.poker__count::before {
+    content: attr(data-currency);
+}
