@@ -1,6 +1,6 @@
 define([
     'jquery',
-    '../app/cardDeck'
+    'app/cardDeck'
 ], function ($, cardDeck) {
     'use strict';
 
