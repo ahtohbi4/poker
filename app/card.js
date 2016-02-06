@@ -35,7 +35,7 @@ define([
         }
 
         return this;
-    };
+    }
 
     /**
      * @method

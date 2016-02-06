@@ -96,6 +96,8 @@ define([
                 name: 'Joker'
             }
         ];
+
+        return this;
     }
 
     /**

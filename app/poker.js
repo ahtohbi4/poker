@@ -7,7 +7,9 @@ define([
     /**
      * @class
      */
-    function Poker() {};
+    function Poker() {
+        return this;
+    }
 
     Poker.prototype.start = function (deposit) {
         this.deposit = deposit || 1000;
