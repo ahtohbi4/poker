@@ -4,7 +4,10 @@ define([
 ], function ($, CardDeck) {
     'use strict';
 
-    var Poker = function () {};
+    /**
+     * @class
+     */
+    function Poker() {};
 
     Poker.prototype.start = function (deposit) {
         this.deposit = deposit || 1000;

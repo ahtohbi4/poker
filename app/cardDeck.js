@@ -1,6 +1,3 @@
-/**
- * @module cardDeck
- */
 define([
     'app/card'
 ], function (Card) {

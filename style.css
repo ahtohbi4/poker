@@ -24,8 +24,8 @@ body {
 
 .card {
     position: relative;
-    width: 200px;
-    height: 300px;
+    width: 150px;
+    height: 200px;
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 1px inset, 0 0 3px rgba(0, 0, 0, .2), 0 0 10px rgba(0, 0, 0, .3);
@@ -34,7 +34,7 @@ body {
 .card::before,
 .card::after {
     content: attr(data-title);
-    font: 27px/36px Georgia;
+    font: 24px/27px Georgia;
 }
 .card[data-title~=♥],
 .card[data-title~=♦] {
@@ -43,11 +43,11 @@ body {
 .card::before {
     position: absolute;
     top: 9px;
-    right: 5px;
+    right: 10px;
 }
 .card::after {
     position: absolute;
     bottom: 9px;
-    left: 5px;
+    left: 10px;
     transform: rotateZ(180deg);
 }

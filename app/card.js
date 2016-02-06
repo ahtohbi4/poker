@@ -6,7 +6,7 @@ define([
     /**
      * @class
      */
-    var Card = function (options) {
+    function Card(options) {
         /**
          * @param {object} options
          * @param {string|number} options.rank - The position of a card relative to others in the same suit (5, 10, Q).
@@ -37,6 +37,10 @@ define([
         return this;
     };
 
+    /**
+     * @method
+     * @returns {jQuery}
+     */
     Card.prototype.view = function() {
         return $('<div>')
             .addClass('card')
