@@ -1,11 +1,23 @@
 define([
     'jquery',
     'app/cardDeck'
-], function ($, cardDeck) {
+], function ($, CardDeck) {
     'use strict';
 
-    var Poker = function () {
-        this.reset(10000000);
+    var Poker = function () {};
+
+    Poker.prototype.start = function (deposit) {
+        this.deposit = deposit || 1000;
+
+        this.getElem('count').text(this.deposit);
+
+        this.deck = new CardDeck();
+        this.deck
+            .new()
+            .shuffle();
+    };
+
+    Poker.prototype.reset = function () {
     };
 
     Poker.prototype.getElem = function (elem) {
@@ -15,18 +27,12 @@ define([
         }[elem] || null;
     };
 
-    Poker.prototype.reset = function(deposit) {
-        this.deposit = deposit || 1000;
-
-        this.getElem('count').text(this.deposit);
-    };
-
     /**
      * @method to check for "Straight flush"
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isStraightFlash = function() {
+    Poker.prototype._isStraightFlash = function () {
         var result;
 
         return result;
@@ -37,7 +43,7 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isFourOfKind = function() {
+    Poker.prototype._isFourOfKind = function () {
         var result;
 
         return result;
@@ -48,7 +54,7 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isFullHouse = function() {
+    Poker.prototype._isFullHouse = function () {
         var result;
 
         return result;
@@ -59,7 +65,7 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isFlush = function() {
+    Poker.prototype._isFlush = function () {
         var result;
 
         return result;
@@ -70,7 +76,7 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isStraight = function() {
+    Poker.prototype._isStraight = function () {
         var result;
 
         return result;
@@ -81,7 +87,7 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isThreeOfKind = function() {
+    Poker.prototype._isThreeOfKind = function () {
         var result;
 
         return result;
@@ -92,7 +98,7 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isTwoPair = function() {
+    Poker.prototype._isTwoPair = function () {
         var result;
 
         return result;
@@ -103,7 +109,7 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isOnePair = function() {
+    Poker.prototype._isOnePair = function () {
         var result;
 
         return result;

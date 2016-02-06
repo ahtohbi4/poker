@@ -1,7 +1,9 @@
 /**
  * @module cardDeck
  */
-define(function () {
+define([
+    'app/card'
+], function (Card) {
     'use strict';
 
     /**
@@ -104,17 +106,24 @@ define(function () {
      * @returns {CardDeck}
      * @public
      */
-    CardDeck.prototype.reset = function () {
+    CardDeck.prototype.new = function () {
         this.cards = [];
 
         this._SUITS.forEach(function (suit) {
             this._VALUES.forEach(function (value) {
-                this.cards.push(`${value.name || value.value} ${suit.sign}`);
+                this.cards.push(new Card({
+                    value: value.value,
+                    suit: suit.sign,
+                    name: value.name
+                }));
             }, this);
         }, this);
 
         this._MORE_VALUES.forEach(function (value) {
-            this.cards.push(value.name);
+            this.cards.push(new Card({
+                value: value.value,
+                name: value.name
+            }));
         }, this);
 
         return this;
