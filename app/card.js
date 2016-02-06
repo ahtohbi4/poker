@@ -29,21 +29,18 @@ define([
                 this.suit = options.suit
             }
 
-            this.name = options.name || `${this.rank} ${this.suit}`;
+            this.title = options.title || `${this.rank} ${this.suit}`;
 
             this.faceUp = options.faceUp || false;
         }
 
-        return {
-            rank: this.rank,
-            value: this.value,
-            suit: this.suit
-        };
+        return this;
     };
 
     Card.prototype.view = function() {
-        return $('div')
-            .addClass('card');
+        return $('<div>')
+            .addClass('card')
+            .attr('data-title', this.title);
     };
 
     return Card;
