@@ -20,13 +20,13 @@ define([
             if (typeof options.rank == 'undefined') {
                 throw new Error('Required param "rank" for object Card was missed.');
             } else{
-                this.rank = options.rank
+                this.rank = options.rank;
             }
 
             this.value = options.value || this.rank;
 
             if (options.suit) {
-                this.suit = options.suit
+                this.suit = options.suit;
             }
 
             this.title = options.title || `${this.rank} ${this.suit}`;

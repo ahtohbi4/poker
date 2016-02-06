@@ -5,6 +5,4 @@ require([
     var poker = new Poker();
 
     poker.start();
-
-    console.table(poker.cards);
 });
