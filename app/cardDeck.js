@@ -19,19 +19,19 @@ define([
         this._SUITS = [
             {
                 name: 'Hearts',
-                sign: '♥'
+                pip: '♥'
             },
             {
                 name: 'Diams',
-                sign: '♦'
+                pip: '♦'
             },
             {
                 name: 'Clubs',
-                sign: '♣'
+                pip: '♣'
             },
             {
                 name: 'Spades',
-                sign: '♠'
+                pip: '♠'
             }
         ];
 
@@ -39,7 +39,7 @@ define([
          * @const
          * @private
          */
-        this._VALUES = [
+        this._RANKS = [
             {
                 value: 2
             },
@@ -89,7 +89,7 @@ define([
          * @const
          * @private
          */
-        this._MORE_VALUES = [
+        this._MORE_RANKS = [
             {
                 value: 0,
                 name: 'Joker'
@@ -110,19 +110,19 @@ define([
         this.cards = [];
 
         this._SUITS.forEach(function (suit) {
-            this._VALUES.forEach(function (value) {
+            this._RANKS.forEach(function (rank) {
                 this.cards.push(new Card({
-                    value: value.value,
-                    suit: suit.sign,
-                    name: value.name
+                    rank: rank.value,
+                    suit: suit.pip,
+                    name: rank.name
                 }));
             }, this);
         }, this);
 
-        this._MORE_VALUES.forEach(function (value) {
+        this._MORE_RANKS.forEach(function (rank) {
             this.cards.push(new Card({
-                value: value.value,
-                name: value.name
+                rank: rank.value,
+                name: rank.name
             }));
         }, this);
 
