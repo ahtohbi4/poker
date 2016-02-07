@@ -32,6 +32,8 @@ define([
             this.title = options.title || `${this.rank} ${this.suit}`;
 
             this.faceUp = options.faceUp || false;
+
+            this.view = $('<div>').addClass('card');
         }
 
         return this;
@@ -39,12 +41,19 @@ define([
 
     /**
      * @method
-     * @returns {jQuery}
+     * @returns {Card}
      */
-    Card.prototype.view = function() {
-        return $('<div>')
-            .addClass('card')
-            .attr('data-title', this.title);
+    Card.prototype.turnFaceUp = function(faceUp) {
+        var _this = this;
+        this.faceUp = faceUp || this.faceUp;
+
+        this.view
+            .attr('data-title', function () {
+                return _this.faceUp ? _this.title : null;
+            })
+            .toggleClass('card_face-up', _this.faceUp);
+
+        return this;
     };
 
     return Card;

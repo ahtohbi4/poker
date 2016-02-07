@@ -26,26 +26,30 @@ body {
     position: relative;
     width: 150px;
     height: 200px;
-    background: #fff;
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0) 25%, rgba(255, 255, 255, .2) 25%, rgba(255, 255, 255, .2) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, .2) 75%), linear-gradient(45deg, rgba(0, 0, 0, 0) 25%, rgba(255, 255, 255, .2) 25%, rgba(255, 255, 255, .2) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, .2) 75%), rgb(0, 153, 151);
+    background-size: 25px 25px;
     border-radius: 5px;
-    box-shadow: 0 0 1px inset, 0 0 3px rgba(0, 0, 0, .2), 0 0 10px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 3px rgba(0, 0, 0, .2), 0 0 10px rgba(0, 0, 0, .3);
     color: #333;
 }
-.card::before,
-.card::after {
+.card_face-up {
+    background: #fff;
+}
+.card_face-up::before,
+.card_face-up::after {
     content: attr(data-title);
     font: 24px/27px Georgia;
 }
-.card[data-title~=♥],
-.card[data-title~=♦] {
+.card_face-up[data-title~=♥],
+.card_face-up[data-title~=♦] {
     color: #f30;
 }
-.card::before {
+.card_face-up::before {
     position: absolute;
     top: 9px;
     right: 10px;
 }
-.card::after {
+.card_face-up::after {
     position: absolute;
     bottom: 9px;
     left: 10px;
