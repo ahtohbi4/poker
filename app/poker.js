@@ -1,7 +1,8 @@
 define([
     'jquery',
+    'app/button',
     'app/cardDeck'
-], function ($, CardDeck) {
+], function ($, Button, CardDeck) {
     'use strict';
 
     /**
@@ -10,6 +11,41 @@ define([
     function Poker() {
         return this;
     }
+
+    Poker.prototype.getElem = function (elem) {
+        return {
+            controls: $('.poker__controls'),
+            count: $('.poker__count'),
+            hand: $('.poker__hand')
+        }[elem] || null;
+    };
+
+    /**
+     * @method
+     */
+    Poker.prototype.firstDeal = function() {
+        // Firs step
+        for (var i = 0; i < 5; i++) {
+            var card = this.deck.getCard();
+
+            this.getElem('hand').append(card.view);
+        }
+
+        // Available bets
+        [10, 50, 100, 500].forEach(function (bet) {
+            var button = new Button('$' + bet, function () {
+                return alert('$' + bet);
+            });
+
+            this.getElem('controls').append(button.view);
+        }, this);
+
+        return this;
+    };
+
+    Poker.prototype.secondDeal = function() {
+        // body...
+    };
 
     Poker.prototype.start = function (deposit) {
         this.deposit = deposit || 1000;
@@ -20,16 +56,11 @@ define([
         this.deck
             .new()
             .shuffle();
+
+        this.firstDeal();
     };
 
     Poker.prototype.reset = function () {
-    };
-
-    Poker.prototype.getElem = function (elem) {
-        return {
-            count: $('.poker__count'),
-            hand: $('.poker__hand')
-        }[elem] || null;
     };
 
     /**
