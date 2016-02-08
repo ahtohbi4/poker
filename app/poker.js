@@ -1,9 +1,12 @@
 define([
     'jquery',
     'app/button',
-    'app/cardDeck'
-], function ($, Button, CardDeck) {
+    'app/cardDeck',
+    'app/notification'
+], function ($, Button, CardDeck, Notification) {
     'use strict';
+
+    var notification = new Notification();
 
     /**
      * @class
@@ -41,8 +44,7 @@ define([
         return {
             controls: $('.poker__controls'),
             deposit: $('.poker__deposit'),
-            hand: $('.poker__hand'),
-            notification: $('.poker__notification')
+            hand: $('.poker__hand')
         }[elem] || null;
     };
 
@@ -83,19 +85,6 @@ define([
      * @returns {Poker}
      * @private
      */
-    Poker.prototype._notification = function (message) {
-        message = message || '';
-
-        this._getElem('notification').text(message);
-
-        return this;
-    };
-
-    /**
-     * @method
-     * @returns {Poker}
-     * @private
-     */
     Poker.prototype._firstDeal = function() {
         var _this = this;
 
@@ -118,7 +107,7 @@ define([
             _this._getElem('controls').append(button.view);
         });
 
-        this._notification('Choose your Bet..');
+        notification.send('Choose your Bet..');
 
         return this;
     };
@@ -142,7 +131,7 @@ define([
 
         this._getElem('controls').html(button.view);
 
-        this._notification('Select held cards...');
+        notification.send('Select held cards...');
 
         return this;
     };
