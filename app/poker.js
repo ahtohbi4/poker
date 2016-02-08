@@ -35,8 +35,9 @@ define([
     /**
      * @method
      * @returns {Poker}
+     * @private
      */
-    Poker.prototype.firstDeal = function() {
+    Poker.prototype._firstDeal = function() {
         var _this = this;
 
         this.firstHand = this.deck.getCards(5);
@@ -48,7 +49,7 @@ define([
         this._BETS.forEach(function (bet) {
             var button = new Button('$' + bet, function () {
                 _this.bet = bet;
-                _this.secondDeal();
+                _this._secondDeal();
             });
 
             _this._getElem('controls').append(button.view);
@@ -60,41 +61,24 @@ define([
     /**
      * @method
      * @returns {Poker}
+     * @private
      */
-    Poker.prototype.secondDeal = function() {
+    Poker.prototype._secondDeal = function() {
+        // Open up the cards
         this.firstHand = this.firstHand.map(function (card) {
             card.turnFaceUp(true);
+            card.selectable = true
 
             return card;
         });
-        this._getElem('hand').empty();
-        this.firstHand.forEach(function (card) {
-            this._getElem('hand').append(card.view);
-        }, this);
 
         var button = new Button('Change Cards');
 
         this._getElem('controls').html(button.view);
     };
 
-    Poker.prototype.start = function (deposit) {
-        this.deposit = deposit || 1000;
-
-        this._getElem('count').text(this.deposit);
-
-        this.deck = new CardDeck();
-        this.deck
-            .new()
-            .shuffle();
-
-        this.firstDeal();
-    };
-
-    Poker.prototype.reset = function () {
-    };
-
     /**
-     * @method to check for "Straight flush"
+     * @method Check for "Straight flush"
      * @returns {boolean}
      * @private
      */
@@ -105,7 +89,7 @@ define([
     };
 
     /**
-     * Four of a kind
+     * @method Check for "Four of a kind"
      * @returns {boolean}
      * @private
      */
@@ -116,7 +100,7 @@ define([
     };
 
     /**
-     * Full house
+     * @method Check for "Full house"
      * @returns {boolean}
      * @private
      */
@@ -127,7 +111,7 @@ define([
     };
 
     /**
-     * Flush
+     * @method Check for "Flush"
      * @returns {boolean}
      * @private
      */
@@ -138,7 +122,7 @@ define([
     };
 
     /**
-     * Straight
+     * @method Check for "Straight"
      * @returns {boolean}
      * @private
      */
@@ -149,7 +133,7 @@ define([
     };
 
     /**
-     * Three of a kind
+     * @method Check for "Three of a kind"
      * @returns {boolean}
      * @private
      */
@@ -160,7 +144,7 @@ define([
     };
 
     /**
-     * Two pair
+     * @method Check for "Two pair"
      * @returns {boolean}
      * @private
      */
@@ -171,7 +155,7 @@ define([
     };
 
     /**
-     * One pair
+     * @method Check for "One pair"
      * @returns {boolean}
      * @private
      */
@@ -179,6 +163,25 @@ define([
         var result;
 
         return result;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     */
+    Poker.prototype.start = function (deposit) {
+        this.deposit = deposit || 1000;
+
+        this._getElem('count').text(this.deposit);
+
+        this.deck = new CardDeck();
+        this.deck
+            .new()
+            .shuffle();
+
+        this._firstDeal();
+
+        return this;
     };
 
     return Poker;
