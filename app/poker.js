@@ -11,9 +11,22 @@ define([
     function Poker(options) {
         var opts = options || {};
 
+        /**
+         * @const {array} [_BETS=[10, 50, 100, 500]]
+         * @private
+         */
         this._BETS = opts.bets || [10, 50, 100, 500];
 
+        /**
+         * @property {array} [firstHand=[]] - Array of the First Hand Cards
+         * @private
+         */
         this.firstHand = [];
+
+        /**
+         * @property {array} [secondHand=[]] - Array of the Second Hand Cards
+         * @private
+         */
         this.secondHand = [];
 
         return this;
