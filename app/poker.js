@@ -27,10 +27,42 @@ define([
     Poker.prototype._getElem = function (elem) {
         return {
             controls: $('.poker__controls'),
-            count: $('.poker__count'),
+            deposit: $('.poker__deposit'),
             hand: $('.poker__hand'),
             notification: $('.poker__notification')
         }[elem] || null;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._updateDeposit = function () {
+        this._getElem('deposit').text(this.deposit);
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._getFromDeposit = function (amount) {
+        var result;
+
+        if (amount > this.deposit) {
+            result = false;
+        } else {
+            this.deposit = this.deposit - amount;
+
+            this._updateDeposit();
+
+            result = true;
+        }
+
+        return result;
     };
 
     /**
@@ -62,8 +94,12 @@ define([
         // Available bets
         this._BETS.forEach(function (bet) {
             var button = new Button('$' + bet, function () {
-                _this.bet = bet;
-                _this._secondDeal();
+                if (_this._getFromDeposit(bet)) {
+                    _this.bet = bet;
+                    _this._secondDeal();
+                } else {
+                    _this._notification(`Your deposit is not enough to bet ${bet}`);
+                }
             });
 
             _this._getElem('controls').append(button.view);
@@ -193,7 +229,7 @@ define([
     Poker.prototype.start = function (deposit) {
         this.deposit = deposit || 1000;
 
-        this._getElem('count').text(this.deposit);
+        this._updateDeposit();
 
         this.deck = new CardDeck();
         this.deck
