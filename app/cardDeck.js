@@ -121,7 +121,7 @@ define([
         this._MORE_RANKS.forEach(function (rank) {
             this.cards.push(new Card({
                 rank: rank.value,
-                name: rank.name
+                title: rank.name
             }));
         }, this);
 
