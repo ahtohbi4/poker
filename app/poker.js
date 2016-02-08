@@ -13,6 +13,9 @@ define([
 
         this._BETS = opts.bets || [10, 50, 100, 500];
 
+        this.firstHand = [];
+        this.secondHand = [];
+
         return this;
     }
 
@@ -34,21 +37,22 @@ define([
      * @returns {Poker}
      */
     Poker.prototype.firstDeal = function() {
-        // Firs step
-        for (var i = 0; i < 5; i++) {
-            var card = this.deck.getCard();
+        var _this = this;
 
+        this.firstHand = this.deck.getCards(5);
+        this.firstHand.forEach(function (card) {
             this._getElem('hand').append(card.view);
-        }
+        }, this);
 
         // Available bets
         this._BETS.forEach(function (bet) {
             var button = new Button('$' + bet, function () {
-                return alert('$' + bet);
+                _this.bet = bet;
+                _this.secondDeal();
             });
 
-            this._getElem('controls').append(button.view);
-        }, this);
+            _this._getElem('controls').append(button.view);
+        });
 
         return this;
     };
@@ -58,7 +62,19 @@ define([
      * @returns {Poker}
      */
     Poker.prototype.secondDeal = function() {
-        // body...
+        this.firstHand = this.firstHand.map(function (card) {
+            card.turnFaceUp(true);
+
+            return card;
+        });
+        this._getElem('hand').empty();
+        this.firstHand.forEach(function (card) {
+            this._getElem('hand').append(card.view);
+        }, this);
+
+        var button = new Button('Change Cards');
+
+        this._getElem('controls').html(button.view);
     };
 
     Poker.prototype.start = function (deposit) {
