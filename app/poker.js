@@ -28,8 +28,22 @@ define([
         return {
             controls: $('.poker__controls'),
             count: $('.poker__count'),
-            hand: $('.poker__hand')
+            hand: $('.poker__hand'),
+            notification: $('.poker__notification')
         }[elem] || null;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._notification = function (message) {
+        message = message || '';
+
+        this._getElem('notification').text(message);
+
+        return this;
     };
 
     /**
@@ -55,6 +69,8 @@ define([
             _this._getElem('controls').append(button.view);
         });
 
+        this._notification('Choose your Bet..');
+
         return this;
     };
 
@@ -76,6 +92,10 @@ define([
         var button = new Button('Change Cards');
 
         this._getElem('controls').html(button.view);
+
+        this._notification('Select held cards...');
+
+        return this;
     };
 
     /**
