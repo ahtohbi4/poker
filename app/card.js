@@ -10,9 +10,11 @@ define([
         /**
          * @param {object} options
          * @param {string|number} options.rank - The position of a card relative to others in the same suit (5, 10, Q).
-         * @param {number} [options.value=options.rank] - Number value of rank (J=11, A=1 or 14).
+         * @param {number} [options.value=<options.rank>] - Number value of rank (J=11, A=1 or 14).
+         * @param {number} [options.title=<options.rank options.suit>] - Title placed on face of the Card.
          * @param {string} options.suit - Suit.
-         * @param {boolean} [options.faceUp=false] - A card laid on the table face-up.
+         * @param {boolean} [options.isFaceUp=false] - The Card laid on the table face-up.
+         * @param {boolean} [options.isSelectable=false] - The Card is selectable.
          */
         if (typeof options == 'undefined') {
             throw new Error('Required params for object Card was missed.');
@@ -29,9 +31,11 @@ define([
                 this.suit = options.suit;
             }
 
-            this.title = options.title || `${this.rank} ${this.suit}`;
+            this.title = (options.title || `${this.rank} ${this.suit}`).trim();
 
-            this.faceUp = options.faceUp || false;
+            this.isFaceUp = options.isFaceUp || false;
+
+            this.isSelectable = options.isSelectable || false;
 
             this.view = $('<div>').addClass('card');
         }
@@ -43,16 +47,24 @@ define([
      * @method
      * @returns {Card}
      */
-    Card.prototype.turnFaceUp = function(faceUp) {
+    Card.prototype.turnFaceUp = function(isFaceUp) {
         var _this = this;
-        this.faceUp = faceUp || this.faceUp;
+        this.isFaceUp = isFaceUp || this.isFaceUp;
 
         this.view
             .attr('data-title', function () {
-                return _this.faceUp ? _this.title : null;
+                return _this.isFaceUp ? _this.title : null;
             })
-            .toggleClass('card_face-up', _this.faceUp);
+            .toggleClass('card_face-up', this.isFaceUp);
 
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Card}
+     */
+    Card.prototype.selectable = function(isSelectable) {
         return this;
     };
 
