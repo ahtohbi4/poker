@@ -8,11 +8,20 @@ define([
     /**
      * @class
      */
-    function Poker() {
+    function Poker(options) {
+        var opts = options || {};
+
+        this._BETS = opts.bets || [10, 50, 100, 500];
+
         return this;
     }
 
-    Poker.prototype.getElem = function (elem) {
+    /**
+     * @method
+     * @returns {jQuery}
+     * @private
+     */
+    Poker.prototype._getElem = function (elem) {
         return {
             controls: $('.poker__controls'),
             count: $('.poker__count'),
@@ -22,27 +31,32 @@ define([
 
     /**
      * @method
+     * @returns {Poker}
      */
     Poker.prototype.firstDeal = function() {
         // Firs step
         for (var i = 0; i < 5; i++) {
             var card = this.deck.getCard();
 
-            this.getElem('hand').append(card.view);
+            this._getElem('hand').append(card.view);
         }
 
         // Available bets
-        [10, 50, 100, 500].forEach(function (bet) {
+        this._BETS.forEach(function (bet) {
             var button = new Button('$' + bet, function () {
                 return alert('$' + bet);
             });
 
-            this.getElem('controls').append(button.view);
+            this._getElem('controls').append(button.view);
         }, this);
 
         return this;
     };
 
+    /**
+     * @method
+     * @returns {Poker}
+     */
     Poker.prototype.secondDeal = function() {
         // body...
     };
@@ -50,7 +64,7 @@ define([
     Poker.prototype.start = function (deposit) {
         this.deposit = deposit || 1000;
 
-        this.getElem('count').text(this.deposit);
+        this._getElem('count').text(this.deposit);
 
         this.deck = new CardDeck();
         this.deck
