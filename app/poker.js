@@ -66,8 +66,9 @@ define([
     Poker.prototype._secondDeal = function() {
         // Open up the cards
         this.firstHand = this.firstHand.map(function (card) {
-            card.turnFaceUp(true);
-            card.selectable = true
+            card
+                .turnFaceUp(true)
+                .selectable(true);
 
             return card;
         });
