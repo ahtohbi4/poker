@@ -108,7 +108,7 @@ define([
      * @returns {Poker}
      * @private
      */
-    Poker.prototype._firstDeal = function() {
+    Poker.prototype._firstDeal = function () {
         var _this = this;
 
         this.firstHand = this.deck.getCards(5);
@@ -116,19 +116,19 @@ define([
             this._getElem('hand').append(card.view);
         }, this);
 
-        // Available bets
-        this._BETS.forEach(function (bet) {
-            var button = new Button('$' + bet, function () {
-                if (_this._getFromDeposit(bet)) {
-                    _this.bet = bet;
-                    _this._secondDeal();
-                } else {
-                    _this._notification(`Your deposit is not enough to bet ${bet}`);
+        this._setControls(this._BETS.map(function (bet) {
+            return {
+                text: '$' + bet,
+                callback: function () {
+                    if (_this._getFromDeposit(bet)) {
+                        _this.bet = bet;
+                        _this._secondDeal();
+                    } else {
+                        notification.send(`Your deposit is not enough to bet \$${bet}`);
+                    }
                 }
-            });
-
-            _this._getElem('controls').append(button.view);
-        });
+            };
+        }));
 
         notification.send('Choose your Bet..');
 
@@ -140,7 +140,8 @@ define([
      * @returns {Poker}
      * @private
      */
-    Poker.prototype._secondDeal = function() {
+    Poker.prototype._secondDeal = function () {
+        var _this = this;
         // Open up the cards
         this.firstHand = this.firstHand.map(function (card) {
             card
@@ -150,9 +151,14 @@ define([
             return card;
         });
 
-        var button = new Button('Change Cards');
-
-        this._getElem('controls').html(button.view);
+        this._setControls([
+            {
+                text: 'Change Cards',
+                callback: function () {
+                    _this._calculation();
+                }
+            }
+        ]);
 
         notification.send('Select held cards...');
 
