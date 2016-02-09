@@ -5,12 +5,15 @@ define([
 
     /**
      * @class
-     * @param {string} [text='Button']
-     * @param {function} [callback]
+     * @param {object} [options]
+     * @param {string} [options.text='Button']
+     * @param {function} [options.callback]
      */
-    function Button(text, callback) {
-        this.text = text || 'Button';
-        this.callback = callback;
+    function Button(options) {
+        options = options || {};
+
+        this.text = options.text || 'Button';
+        this.callback = options.callback;
 
         this.view = $('<button>')
             .addClass('button')
