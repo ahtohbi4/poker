@@ -53,6 +53,29 @@ define([
      * @returns {Poker}
      * @private
      */
+    Poker.prototype._setControls = function(controls) {
+        var _this = this;
+
+        controls = Array.isArray(controls) ? controls : [controls];
+
+        this._controls = controls.map(function (control) {
+            return new Button(control);
+        });
+
+        this._getElem('controls').html(function () {
+            return _this._controls.map(function (control) {
+                return control.view;
+            });
+        });
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
     Poker.prototype._updateDeposit = function () {
         this._getElem('deposit').text(this.deposit);
 
