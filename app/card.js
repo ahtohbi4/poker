@@ -18,10 +18,10 @@ define([
          */
         if (typeof options == 'undefined') {
             throw new Error('Required params for object Card was missed.');
-        } else{
+        } else {
             if (typeof options.rank == 'undefined') {
                 throw new Error('Required param "rank" for object Card was missed.');
-            } else{
+            } else {
                 this.rank = options.rank;
             }
 
