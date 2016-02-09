@@ -112,9 +112,9 @@ define([
         var _this = this;
 
         this.firstHand = this.deck.getCards(5);
-        this.firstHand.forEach(function (card) {
-            this._getElem('hand').append(card.view);
-        }, this);
+        this._getElem('hand').html(this.firstHand.map(function (card) {
+            return card.view;
+        }));
 
         this._setControls(this._BETS.map(function (bet) {
             return {
