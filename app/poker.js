@@ -160,6 +160,28 @@ define([
     };
 
     /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._calculation = function () {
+        var _this = this;
+
+        this._setControls([
+            {
+                text: 'New Deal!',
+                callback: function () {
+                    _this._firstDeal();
+                }
+            }
+        ]);
+
+        notification.send('You have {combination}. Try again!');
+
+        return this;
+    };
+
+    /**
      * @method Check for "Straight flush"
      * @returns {boolean}
      * @private
