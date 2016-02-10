@@ -104,90 +104,6 @@ define([
     };
 
     /**
-     * @method
-     * @returns {Poker}
-     * @private
-     */
-    Poker.prototype._firstDeal = function () {
-        var _this = this;
-
-        this.firstHand = this.deck.getCards(5);
-        this._getElem('hand').html(this.firstHand.map(function (card) {
-            return card.view;
-        }));
-
-        this._setControls(this._BETS.map(function (bet) {
-            return {
-                text: '$' + bet,
-                callback: function () {
-                    if (_this._getFromDeposit(bet)) {
-                        _this.bet = bet;
-                        _this._secondDeal();
-                    } else {
-                        notification.send(`Your deposit is not enough to bet \$${bet}`);
-                    }
-                }
-            };
-        }));
-
-        notification.send('Choose your Bet..');
-
-        return this;
-    };
-
-    /**
-     * @method
-     * @returns {Poker}
-     * @private
-     */
-    Poker.prototype._secondDeal = function () {
-        var _this = this;
-        // Open up the cards
-        this.firstHand = this.firstHand.map(function (card) {
-            card
-                .turnFaceUp(true)
-                .selectable(true);
-
-            return card;
-        });
-
-        this._setControls([
-            {
-                text: 'Change Cards',
-                callback: function () {
-                    _this._calculation();
-                }
-            }
-        ]);
-
-        notification.send('Select held cards...');
-
-        return this;
-    };
-
-    /**
-     * @method
-     * @returns {Poker}
-     * @private
-     */
-    Poker.prototype._calculation = function () {
-        var _this = this;
-
-        this._setControls([
-            {
-                text: 'New Deal!',
-                callback: function () {
-                    _this._firstDeal();
-                }
-            }
-        ]);
-
-        notification.send('You have {combination}. Try again!');
-
-        return this;
-    };
-
-    /**
      * @method Check for "Straight flush"
      * @returns {boolean}
      * @private
@@ -278,6 +194,117 @@ define([
     /**
      * @method
      * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._dealCards = function () {
+        var _this = this;
+
+        this.firstHand = this.deck.getCards(5);
+        this._getElem('hand').html(this.firstHand.map(function (card) {
+            return card.view;
+        }));
+
+        this._setControls(this._BETS.map(function (bet) {
+            return {
+                text: '$' + bet,
+                callback: function () {
+                    if (_this._getFromDeposit(bet)) {
+                        _this.bet = bet;
+                        _this._changeCards();
+                    } else {
+                        notification.send(`Your deposit is not enough to bet \$${bet}`);
+                    }
+                }
+            };
+        }));
+
+        notification.send('Choose your Bet..');
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._changeCards = function () {
+        var _this = this;
+        // Open up the cards
+        this.firstHand = this.firstHand.map(function (card) {
+            card
+                .turnFaceUp(true)
+                .selectable(true);
+
+            return card;
+        });
+
+        this._setControls([
+            {
+                text: 'Change Cards',
+                callback: function () {
+                    _this._calculation();
+                }
+            }
+        ]);
+
+        notification.send('Select held cards...');
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._calculation = function () {
+        var _this = this;
+
+        this._setControls([
+            {
+                text: 'New Deal!',
+                callback: function () {
+                    _this._dealCards();
+                }
+            }
+        ]);
+
+        switch (true) {
+            case this._isStraightFlash():
+                notification.send('Great, Lucky! You have "Straight Flash"!');
+                break;
+            case this._isFourOfKind():
+                notification.send('Awesome! You get "Four of Kind".');
+                break;
+            case this._isFullHouse():
+                notification.send('"Full House"');
+                break;
+            case this._isFlush():
+                notification.send('"Flush"');
+                break;
+            case this._isStraight():
+                notification.send('"Straight"');
+                break;
+            case this._isThreeOfKind():
+                notification.send('"Three of Kind"! Let\'s try to get more?');
+                break;
+            case this._isTwoPair():
+                notification.send('Not bad! It\'s "Two Pair".');
+                break;
+            case this._isOnePair():
+                notification.send('You have "One Pair"! Play again?');
+                break;
+            default:
+                notification.send('Never mind, buddy... Try again!');
+        }
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
      */
     Poker.prototype.start = function (deposit) {
         this.deposit = deposit || 1000;
@@ -289,7 +316,7 @@ define([
             .new()
             .shuffle();
 
-        this._firstDeal();
+        this._dealCards();
 
         return this;
     };
