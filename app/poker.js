@@ -199,6 +199,11 @@ define([
     Poker.prototype._dealCards = function () {
         var _this = this;
 
+        this.deck = new CardDeck();
+        this.deck
+            .new()
+            .shuffle();
+
         this.firstHand = this.deck.getCards(5);
         this._getElem('hand').html(this.firstHand.map(function (card) {
             return card.view;
@@ -310,11 +315,6 @@ define([
         this.deposit = deposit || 1000;
 
         this._updateDeposit();
-
-        this.deck = new CardDeck();
-        this.deck
-            .new()
-            .shuffle();
 
         this._dealCards();
 
