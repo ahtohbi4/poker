@@ -10,21 +10,23 @@ define([
 
     /**
      * @class
+     * @param {object} [options]
+     * @param {array} [options.bets=[10, 50, 100, 500]]
      * @see https://en.wikipedia.org/wiki/Glossary_of_card_game_terms
      * @see https://en.wikipedia.org/wiki/Glossary_of_poker_terms
      * @see https://en.wikipedia.org/wiki/List_of_poker_hands
      */
     function Poker(options) {
-        var opts = options || {};
+        options = options || {};
 
         /**
-         * @const {array} [_BETS=[10, 50, 100, 500]]
+         * @const {array}
          * @private
          */
-        this._BETS = opts.bets || [10, 50, 100, 500];
+        this._BETS = options.bets || [10, 50, 100, 500];
 
         /**
-         * @property {array} [_board=[]] - Array of the Board cards
+         * @property {array} - Array of the Board cards
          * @private
          */
         this._board = [];
