@@ -10,6 +10,7 @@ define([
 
     /**
      * @class
+     * @see https://en.wikipedia.org/wiki/Glossary_of_poker_terms
      */
     function Poker(options) {
         var opts = options || {};
@@ -21,16 +22,10 @@ define([
         this._BETS = opts.bets || [10, 50, 100, 500];
 
         /**
-         * @property {array} [firstHand=[]] - Array of the First Hand Cards
+         * @property {array} [_board=[]] - Array of the Board cards
          * @private
          */
-        this.firstHand = [];
-
-        /**
-         * @property {array} [secondHand=[]] - Array of the Second Hand Cards
-         * @private
-         */
-        this.secondHand = [];
+        this._board = [];
 
         return this;
     }
@@ -45,7 +40,7 @@ define([
             bet: $('.poker__bet'),
             controls: $('.poker__controls'),
             deposit: $('.poker__deposit'),
-            hand: $('.poker__hand')
+            board: $('.poker__board')
         }[elem] || null;
     };
 
@@ -232,8 +227,8 @@ define([
             .new()
             .shuffle();
 
-        this.firstHand = this.deck.getCards(5);
-        this._getElem('hand').html(this.firstHand.map(function (card) {
+        this._board = this.deck.getCards(5);
+        this._getElem('board').html(this._board.map(function (card) {
             return card.view;
         }));
 
@@ -258,8 +253,9 @@ define([
      */
     Poker.prototype._changeCards = function () {
         var _this = this;
+
         // Open up the cards
-        this.firstHand = this.firstHand.map(function (card) {
+        this._board = this._board.map(function (card) {
             card
                 .turnFaceUp(true)
                 .selectable(true);
