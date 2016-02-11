@@ -211,6 +211,19 @@ define([
      * @returns {Poker}
      * @private
      */
+    Poker.prototype._resetBet = function() {
+        this.bet = 0;
+
+        this._getElem('bet').text('');
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
     Poker.prototype._dealCards = function () {
         var _this = this;
 
@@ -280,7 +293,9 @@ define([
             {
                 text: 'New Deal!',
                 callback: function () {
-                    _this._dealCards();
+                    _this
+                        ._resetBet()
+                        ._dealCards();
                 }
             }
         ]);
