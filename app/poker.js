@@ -42,6 +42,7 @@ define([
      */
     Poker.prototype._getElem = function (elem) {
         return {
+            bet: $('.poker__bet'),
             controls: $('.poker__controls'),
             deposit: $('.poker__deposit'),
             hand: $('.poker__hand')
@@ -161,34 +162,28 @@ define([
 
     /**
      * @method
-     * @returns {Poker}
+     * @param {number} amount - Sets parameter "amount" as value of deposit if it is positive,
+     * and decreases deposit on "amount" if negative one
+     * @returns {number|boolean}
      * @private
      */
-    Poker.prototype._updateDeposit = function () {
-        this._getElem('deposit').text(this.deposit);
-
-        return this;
-    };
-
-    /**
-     * @method
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._getFromDeposit = function (amount) {
+    Poker.prototype._setDeposit = function (amount) {
         var result;
 
-        if (amount > this.deposit) {
-            result = false;
+        if (amount < 0) {
+            result = this.deposit + amount;
         } else {
-            this.deposit = this.deposit - amount;
-
-            this._updateDeposit();
-
-            result = true;
+            result = amount;
         }
 
-        return result;
+        if (result < 0) {
+            return false;
+        } else {
+            this.deposit = result;
+            this._getElem('deposit').text(this.deposit);
+
+            return result;
+        }
     };
 
     /**
@@ -197,8 +192,10 @@ define([
      * @private
      */
     Poker.prototype._toBet = function(bet) {
-        if (this._getFromDeposit(bet)) {
+        if (this._setDeposit(-bet) !== false) {
             this.bet = bet;
+            this._getElem('bet').text('$' + this.bet);
+
             this._changeCards();
         } else {
             notification.send('Your deposit $' + this.deposit + ' is not enough to bet $' + bet);
@@ -323,9 +320,7 @@ define([
      * @returns {Poker}
      */
     Poker.prototype.start = function (deposit) {
-        this.deposit = deposit || 1000;
-
-        this._updateDeposit();
+        this._setDeposit(deposit || 1000);
 
         this._dealCards();
 
