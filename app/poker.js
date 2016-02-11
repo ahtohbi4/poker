@@ -139,6 +139,7 @@ define([
 
     /**
      * @method
+     * @param {array|object} controls
      * @returns {Poker}
      * @private
      */
@@ -188,6 +189,7 @@ define([
 
     /**
      * @method
+     * @param {number} bet
      * @returns {Poker}
      * @private
      */
@@ -317,7 +319,9 @@ define([
 
     /**
      * @method
+     * @param {number} [deposit=1000]
      * @returns {Poker}
+     * @public
      */
     Poker.prototype.start = function (deposit) {
         this._setDeposit(deposit || 1000);
