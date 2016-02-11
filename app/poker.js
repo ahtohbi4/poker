@@ -49,61 +49,6 @@ define([
     };
 
     /**
-     * @method
-     * @returns {Poker}
-     * @private
-     */
-    Poker.prototype._setControls = function(controls) {
-        var _this = this;
-
-        controls = Array.isArray(controls) ? controls : [controls];
-
-        this._controls = controls.map(function (control) {
-            return new Button(control);
-        });
-
-        this._getElem('controls').html(function () {
-            return _this._controls.map(function (control) {
-                return control.view;
-            });
-        });
-
-        return this;
-    };
-
-    /**
-     * @method
-     * @returns {Poker}
-     * @private
-     */
-    Poker.prototype._updateDeposit = function () {
-        this._getElem('deposit').text(this.deposit);
-
-        return this;
-    };
-
-    /**
-     * @method
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._getFromDeposit = function (amount) {
-        var result;
-
-        if (amount > this.deposit) {
-            result = false;
-        } else {
-            this.deposit = this.deposit - amount;
-
-            this._updateDeposit();
-
-            result = true;
-        }
-
-        return result;
-    };
-
-    /**
      * @method Check for "Straight flush"
      * @returns {boolean}
      * @private
@@ -196,6 +141,77 @@ define([
      * @returns {Poker}
      * @private
      */
+    Poker.prototype._setControls = function(controls) {
+        var _this = this;
+
+        controls = Array.isArray(controls) ? controls : [controls];
+
+        this._controls = controls.map(function (control) {
+            return new Button(control);
+        });
+
+        this._getElem('controls').html(function () {
+            return _this._controls.map(function (control) {
+                return control.view;
+            });
+        });
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._updateDeposit = function () {
+        this._getElem('deposit').text(this.deposit);
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._getFromDeposit = function (amount) {
+        var result;
+
+        if (amount > this.deposit) {
+            result = false;
+        } else {
+            this.deposit = this.deposit - amount;
+
+            this._updateDeposit();
+
+            result = true;
+        }
+
+        return result;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._toBet = function(bet) {
+        if (this._getFromDeposit(bet)) {
+            this.bet = bet;
+            this._changeCards();
+        } else {
+            notification.send('Your deposit $' + this.deposit + ' is not enough to bet $' + bet);
+        }
+
+        return this;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
     Poker.prototype._dealCards = function () {
         var _this = this;
 
@@ -213,12 +229,7 @@ define([
             return {
                 text: '$' + bet,
                 callback: function () {
-                    if (_this._getFromDeposit(bet)) {
-                        _this.bet = bet;
-                        _this._changeCards();
-                    } else {
-                        notification.send(`Your deposit is not enough to bet \$${bet}`);
-                    }
+                    _this._toBet(bet);
                 }
             };
         }));
