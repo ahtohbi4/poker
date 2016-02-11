@@ -10,7 +10,9 @@ define([
 
     /**
      * @class
+     * @see https://en.wikipedia.org/wiki/Glossary_of_card_game_terms
      * @see https://en.wikipedia.org/wiki/Glossary_of_poker_terms
+     * @see https://en.wikipedia.org/wiki/List_of_poker_hands
      */
     function Poker(options) {
         var opts = options || {};
