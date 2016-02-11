@@ -142,7 +142,7 @@ define([
      * @returns {Poker}
      * @private
      */
-    Poker.prototype._setControls = function(controls) {
+    Poker.prototype._setControls = function (controls) {
         var _this = this;
 
         controls = Array.isArray(controls) ? controls : [controls];
@@ -192,7 +192,7 @@ define([
      * @returns {Poker}
      * @private
      */
-    Poker.prototype._toBet = function(bet) {
+    Poker.prototype._toBet = function (bet) {
         if (this._setDeposit(-bet) !== false) {
             this.bet = bet;
             this._getElem('bet').text('$' + this.bet);
@@ -210,7 +210,7 @@ define([
      * @returns {Poker}
      * @private
      */
-    Poker.prototype._resetBet = function() {
+    Poker.prototype._resetBet = function () {
         this.bet = 0;
 
         this._getElem('bet').text('');
@@ -219,7 +219,7 @@ define([
     };
 
     /**
-     * @method
+     * @method - First Step of Round
      * @returns {Poker}
      * @private
      */
@@ -251,7 +251,7 @@ define([
     };
 
     /**
-     * @method
+     * @method - Second Step of Round
      * @returns {Poker}
      * @private
      */
@@ -282,7 +282,7 @@ define([
     };
 
     /**
-     * @method
+     * @method - Third the Finally Step of Round
      * @returns {Poker}
      * @private
      */
