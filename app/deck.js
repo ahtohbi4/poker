@@ -111,16 +111,16 @@ define([
         this._SUITS.forEach(function (suit) {
             this._RANKS.forEach(function (rank) {
                 this.cards.push(new Card({
-                    rank: rank.value,
-                    suit: suit.pip,
-                    name: rank.name
+                    value: rank.value,
+                    rank: rank.name,
+                    suit: suit.pip
                 }));
             }, this);
         }, this);
 
         this._MORE_RANKS.forEach(function (rank) {
             this.cards.push(new Card({
-                rank: rank.value,
+                value: rank.value,
                 title: rank.name
             }));
         }, this);

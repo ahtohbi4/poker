@@ -1,9 +1,9 @@
 define([
     'jquery',
     'app/button',
-    'app/cardDeck',
+    'app/deck',
     'app/notification'
-], function ($, Button, CardDeck, Notification) {
+], function ($, Button, Deck, Notification) {
     'use strict';
 
     var notification = new Notification();
@@ -226,7 +226,7 @@ define([
     Poker.prototype._dealCards = function () {
         var _this = this;
 
-        this.deck = new CardDeck();
+        this.deck = new Deck();
         this.deck
             .new()
             .shuffle();

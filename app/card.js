@@ -48,7 +48,7 @@ define([
      * @method
      * @returns {Card}
      */
-    Card.prototype.turnFaceUp = function(isFaceUp) {
+    Card.prototype.turnFaceUp = function (isFaceUp) {
         var _this = this;
         this.isFaceUp = isFaceUp || this.isFaceUp;
 
@@ -65,7 +65,7 @@ define([
      * @method
      * @returns {Card}
      */
-    Card.prototype.selectable = function(isSelectable) {
+    Card.prototype.selectable = function (isSelectable) {
         return this;
     };
 
