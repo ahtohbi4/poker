@@ -251,6 +251,46 @@ define([
     };
 
     /**
+     * @method - Makes the cards available for selection or vice versa
+     * @param {boolean} flag
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._isSelectableCards = function (flag) {
+        flag = flag || true;
+
+        var _this = this;
+
+        this._board.forEach(function (card) {
+            var c = card.view.find('.card');
+
+            if (flag) {
+                c.on('click', function () {
+                    _this._selectCard(card);
+                });
+            } else {
+                c.off('click');
+            }
+
+            c.toggleClass('poker__card_selectable', flag);
+        });
+
+        return this;
+    };
+
+    /**
+     * @method - Select Card
+     * @param {Card} card
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._selectCard = function (card) {
+        card.view.find('.card').toggleClass('poker__card_selected');
+
+        return this;
+    };
+
+    /**
      * @method - Second Step of Round
      * @returns {Poker}
      * @private
@@ -260,9 +300,9 @@ define([
 
         // Open up the cards
         this._board = this._board.map(function (card) {
-            card
-                .turnFaceUp(true)
-                .selectable(true);
+            card.turnFaceUp(true);
+
+            _this._isSelectableCards(true);
 
             return card;
         });
