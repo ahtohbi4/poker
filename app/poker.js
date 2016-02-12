@@ -27,9 +27,9 @@ define([
 
         /**
          * @property {array} - Array of the Board cards
-         * @private
+         * @public
          */
-        this._board = [];
+        this.board = [];
 
         return this;
     }
@@ -46,94 +46,6 @@ define([
             deposit: $('.poker__deposit'),
             board: $('.poker__board')
         }[elem] || null;
-    };
-
-    /**
-     * @method Check for "Straight flush"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isStraightFlash = function () {
-        var result;
-
-        return result;
-    };
-
-    /**
-     * @method Check for "Four of a kind"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isFourOfKind = function () {
-        var result;
-
-        return result;
-    };
-
-    /**
-     * @method Check for "Full house"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isFullHouse = function () {
-        var result;
-
-        return result;
-    };
-
-    /**
-     * @method Check for "Flush"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isFlush = function () {
-        var result;
-
-        return result;
-    };
-
-    /**
-     * @method Check for "Straight"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isStraight = function () {
-        var result;
-
-        return result;
-    };
-
-    /**
-     * @method Check for "Three of a kind"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isThreeOfKind = function () {
-        var result;
-
-        return result;
-    };
-
-    /**
-     * @method Check for "Two pair"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isTwoPair = function () {
-        var result;
-
-        return result;
-    };
-
-    /**
-     * @method Check for "One pair"
-     * @returns {boolean}
-     * @private
-     */
-    Poker.prototype._isOnePair = function () {
-        var result;
-
-        return result;
     };
 
     /**
@@ -188,64 +100,101 @@ define([
 
     /**
      * @method
+     * @returns {Poker}
+     * @privet
+     */
+    Poker.prototype._repainBoard = function () {
+        this._getElem('board').html(this.board.map(function (card) {
+            return card.view;
+        }));
+
+        return this;
+    };
+
+    /**
+     * @method - Deal Cards
+     * @returns {Poker}
+     * @public
+     */
+    Poker.prototype.dealCards = function () {
+        var _this = this;
+
+        this.deck = new Deck();
+        this.deck.shuffle();
+
+        this.board = this.deck.getCards(3);
+        this._repainBoard();
+
+        // Set Controls
+        this._setControls(this._BETS.map(function (bet) {
+            return {
+                text: '$' + bet,
+                callback: function () {
+                    _this.toBet(bet);
+                }
+            };
+        }));
+
+        notification.send('Do your bet.');
+
+        return this;
+    };
+
+    /**
+     * @method - To make a Bet
      * @param {number} bet
      * @returns {Poker}
-     * @private
+     * @public
      */
-    Poker.prototype._toBet = function (bet) {
+    Poker.prototype.toBet = function (bet) {
         if (this._setDeposit(-bet) !== false) {
             this.bet = bet;
             this._getElem('bet').text('$' + this.bet);
 
-            this._changeCards();
+            this.openUpCards();
         } else {
-            notification.send('Your deposit $' + this.deposit + ' is not enough to bet $' + bet);
+            notification.send('Your deposit is not enough to bet $' + bet + '.');
         }
 
         return this;
     };
 
     /**
-     * @method
+     * @method - Open up the Cards on Board
      * @returns {Poker}
-     * @private
+     * @public
      */
-    Poker.prototype._resetBet = function () {
-        this.bet = 0;
+    Poker.prototype.openUpCards = function () {
+        this.board.forEach(function (card) {
+            card.turnFaceUp(true);
+        });
 
-        this._getElem('bet').text('');
+        this.selectCards();
 
         return this;
     };
 
     /**
-     * @method - First Step of Round
+     * @method - Select Cards on Board
      * @returns {Poker}
-     * @private
+     * @public
      */
-    Poker.prototype._dealCards = function () {
+    Poker.prototype.selectCards = function () {
         var _this = this;
 
-        this.deck = new Deck();
-        this.deck
-            .new()
-            .shuffle();
+        this._isSelectableCards(true);
 
-        this._board = this.deck.getCards(5);
-        this._getElem('board').html(this._board.map(function (card) {
-            return card.view;
-        }));
-
-        this._setControls(this._BETS.map(function (bet) {
-            return {
-                text: '$' + bet,
+        // Set Controls
+        this._setControls([
+            {
+                text: 'Change the Others',
                 callback: function () {
-                    _this._toBet(bet);
+                    _this.changeCards();
                 }
-            };
-        }));
+            }
+        ]);
 
-        notification.send('Choose your Bet..');
+        notification.send('Choose the cards for hold.');
 
         return this;
     };
@@ -257,22 +206,22 @@ define([
      * @private
      */
     Poker.prototype._isSelectableCards = function (flag) {
-        flag = flag || true;
-
         var _this = this;
 
-        this._board.forEach(function (card) {
-            var c = card.view.find('.card');
+        flag = flag || true;
 
+        this.board = this.board.map(function (card) {
             if (flag) {
-                c.on('click', function () {
+                card.view.find('.card').on('click', function () {
                     _this._selectCard(card);
                 });
             } else {
-                c.off('click');
+                card.view.find('.card').off('click');
             }
 
-            c.toggleClass('poker__card_selectable', flag);
+            card.view.find('.card').toggleClass('poker__card_selectable', flag);
+
+            return card;
         });
 
         return this;
@@ -285,7 +234,11 @@ define([
      * @private
      */
     Poker.prototype._selectCard = function (card) {
-        card.view.find('.card').toggleClass('poker__card_selected');
+        card.selected = !card.selected;
+
+        card.view.find('.card').toggleClass('poker__card_selected', function () {
+            return card.selected;
+        });
 
         return this;
     };
@@ -293,30 +246,23 @@ define([
     /**
      * @method - Second Step of Round
      * @returns {Poker}
-     * @private
+     * @public
      */
-    Poker.prototype._changeCards = function () {
+    Poker.prototype.changeCards = function () {
         var _this = this;
 
-        // Open up the cards
-        this._board = this._board.map(function (card) {
-            card.turnFaceUp(true);
-
-            _this._isSelectableCards(true);
+        this.board = this.board.map(function (card) {
+            if (!card.selected) {
+                card = _this.deck.getCard();
+                card.turnFaceUp(true);
+            }
 
             return card;
         });
 
-        this._setControls([
-            {
-                text: 'Change Cards',
-                callback: function () {
-                    _this._calculation();
-                }
-            }
-        ]);
+        this._repainBoard();
 
-        notification.send('Select held cards...');
+        this.calculate();
 
         return this;
     };
@@ -324,18 +270,18 @@ define([
     /**
      * @method - Third the Finally Step of Round
      * @returns {Poker}
-     * @private
+     * @public
      */
-    Poker.prototype._calculation = function () {
+    Poker.prototype.calculate = function () {
         var _this = this;
 
         this._setControls([
             {
-                text: 'New Deal!',
+                text: 'New Deal',
                 callback: function () {
                     _this
                         ._resetBet()
-                        ._dealCards();
+                        .dealCards();
                 }
             }
         ]);
@@ -373,6 +319,123 @@ define([
     };
 
     /**
+     * @method Check for "Straight flush"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isStraightFlash = function () {
+        var result;
+
+        return result;
+    };
+
+    /**
+     * @method Check for "Four of a kind"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isFourOfKind = function () {
+        var result;
+
+        return result;
+    };
+
+    /**
+     * @method Check for "Full house"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isFullHouse = function () {
+        var result;
+
+        return result;
+    };
+
+    /**
+     * @method Check for "Flush"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isFlush = function () {
+        var result,
+            noJokersBoard = this.board.filter(function (card) {
+                return (card.value !== 0);
+            });
+
+        result = noJokersBoard.every(function (card, i, board) {
+            return (i === 0 || card.suit === board[i - 1].suit);
+        });
+
+        return result;
+    };
+
+    /**
+     * @method Check for "Straight"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isStraight = function () {
+        var result;
+
+        return result;
+    };
+
+    /**
+     * @method Check for "Three of a kind"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isThreeOfKind = function () {
+        var result;
+
+        return result;
+    };
+
+    /**
+     * @method Check for "Two pair"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isTwoPair = function () {
+        var result;
+
+        return result;
+    };
+
+    /**
+     * @method Check for "One pair"
+     * @returns {boolean}
+     * @private
+     */
+    Poker.prototype._isOnePair = function () {
+        var result,
+            boardsValues = this.board.map(function (card) {
+                return card.value;
+            });
+
+        boardsValues.sort(function (a, b) {
+            return a - b;
+        });
+
+        debugger;
+
+        return result;
+    };
+
+    /**
+     * @method
+     * @returns {Poker}
+     * @private
+     */
+    Poker.prototype._resetBet = function () {
+        this.bet = 0;
+
+        this._getElem('bet').text('');
+
+        return this;
+    };
+
+    /**
      * @method
      * @param {number} [deposit=1000]
      * @returns {Poker}
@@ -381,7 +444,7 @@ define([
     Poker.prototype.start = function (deposit) {
         this._setDeposit(deposit || 1000);
 
-        this._dealCards();
+        this.dealCards();
 
         return this;
     };

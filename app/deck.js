@@ -97,15 +97,6 @@ define([
             }
         ];
 
-        return this;
-    }
-
-    /**
-     * @method
-     * @returns {CardDeck}
-     * @public
-     */
-    CardDeck.prototype.new = function () {
         this.cards = [];
 
         this._SUITS.forEach(function (suit) {
