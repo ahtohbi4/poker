@@ -1,8 +1,43 @@
 requirejs.config({
     baseUrl: 'lib',
     paths: {
-        app: '../app'
+        app: '../app',
+        jasmine: [
+            '../lib/jasmine/lib/jasmine-2.4.1/jasmine'
+        ],
+        'jasmine-html': [
+            '../lib/jasmine/lib/jasmine-2.4.1/jasmine-html'
+        ],
+        'jasmine-boot': [
+            '../lib/jasmine/lib/jasmine-2.4.1/boot'
+        ],
+        spec: '../spec'
+    },
+    shim: {
+        'jasmine-html': {
+            deps: [
+                'jasmine'
+            ]
+        },
+        'jasmine-boot': {
+            deps: [
+                'jasmine',
+                'jasmine-html'
+            ]
+        }
     }
 });
 
-requirejs(['app/main']);
+require([
+    'jasmine-boot'
+], function () {
+    require([
+        'spec/hands.spec'
+    ], function () {
+        window.onload();
+    })
+});
+
+requirejs([
+    'app/main'
+]);
