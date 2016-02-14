@@ -103,7 +103,7 @@ define([
      * @returns {Poker}
      * @privet
      */
-    Poker.prototype._repainBoard = function () {
+    Poker.prototype._repaintBoard = function () {
         this._getElem('board').html(this.board.map(function (card) {
             return card.view;
         }));
@@ -123,7 +123,7 @@ define([
         this.deck.shuffle();
 
         this.board = this.deck.getCards(3);
-        this._repainBoard();
+        this._repaintBoard();
 
         // Set Controls
         this._setControls(this._BETS.map(function (bet) {
@@ -260,7 +260,7 @@ define([
             return card;
         });
 
-        this._repainBoard();
+        this._repaintBoard();
 
         this.calculate();
 
