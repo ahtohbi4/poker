@@ -2,71 +2,264 @@ define([
     'app/card',
     'app/poker'
 ], function (Card, Poker){
-    var SUITS = ['♥', '♦', '♣', '♠'],
-        poker = new Poker();
+    var poker = new Poker();
 
-    describe('Checking Hands with method _isOnePair()', function () {
-        describe('without repeating Cards', function () {
-            it('should returns false', function () {
+    describe('Matching a Poker combination', function () {
+        // Straight Flush
+        describe('as the "Straight Flush" for Cards', function () {
+            it('5♥, 3♥, 4♥, 6♥, 2♥', function () {
                 poker.board = [
-                    new Card({ value: 10, suit: '♥' }),
-                    new Card({ value: 3,  suit: '♥' }),
-                    new Card({ value: 2,  suit: '♦' }),
-                    new Card({ value: 5,  suit: '♦' }),
-                    new Card({ value: 6,  suit: '♠' })
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 4, suit: '♥'}),
+                    new Card({value: 6, suit: '♥'}),
+                    new Card({value: 2, suit: '♥'})
                 ];
-                expect(poker._isOnePair()).toEqual(false);
+                expect(poker._matcher()).toEqual('straight-flush');
             });
-        });
-        describe('without repeating Cards', function () {
-            it('should returns false', function () {
-                poker.board = [
-                    new Card({ value: 10, suit: '♥' }),
-                    new Card({ value: 3,  suit: '♥' }),
-                    new Card({ value: 2,  suit: '♦' }),
-                    new Card({ value: 0 }),
-                    new Card({ value: 6,  suit: '♠' })
-                ];
-                expect(poker._isOnePair()).toEqual(true);
-            });
-        });
-        describe('with pair of Cards', function () {
-            it('should returns true', function () {
-                poker.board = [
-                    new Card({ value: 10, suit: '♥' }),
-                    new Card({ value: 3,  suit: '♥' }),
-                    new Card({ value: 10, suit: '♦' }),
-                    new Card({ value: 5,  suit: '♦' }),
-                    new Card({ value: 6,  suit: '♠' })
-                ];
-                expect(poker._isOnePair()).toEqual(true);
-            });
-        });
-    });
 
-    describe('Checking Hands with method _isTwoPair()', function () {
-        describe('with one pair of Cards', function () {
-            it('should returns false', function () {
+            it('5♥, Joker, 4♥, 6♥, 2♥', function () {
                 poker.board = [
-                    new Card({ value: 10, suit: '♥' }),
-                    new Card({ value: 3,  suit: '♥' }),
-                    new Card({ value: 2,  suit: '♦' }),
-                    new Card({ value: 5,  suit: '♦' }),
-                    new Card({ value: 5,  suit: '♠' })
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 4, suit: '♥'}),
+                    new Card({value: 6, suit: '♥'}),
+                    new Card({value: 2, suit: '♥'})
                 ];
-                expect(poker._isTwoPair()).toEqual(false);
+                expect(poker._matcher()).toEqual('straight-flush');
+            });
+
+            it('Joker, 3♥, 5♥, Joker, 7♥', function () {
+                poker.board = [
+                    new Card({value: 0}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 7, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('straight-flush');
             });
         });
-        describe('with two pairs of Cards', function () {
-            it('should returns true', function () {
+
+        // Four of Kind
+        describe('as the "Four of Kind" for Cards', function () {
+            it('5♥, 5♣, 10♥, 5♦, 5♠', function () {
                 poker.board = [
-                    new Card({ value: 10, suit: '♥' }),
-                    new Card({ value: 3,  suit: '♥' }),
-                    new Card({ value: 10, suit: '♦' }),
-                    new Card({ value: 5,  suit: '♦' }),
-                    new Card({ value: 3,  suit: '♠' })
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 5, suit: '♣'}),
+                    new Card({value: 10, suit: '♥'}),
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 5, suit: '♠'})
                 ];
-                expect(poker._isTwoPair()).toEqual(true);
+                expect(poker._matcher()).toEqual('four-of-kind');
+            });
+
+            it('5♥, Joker, 10♥, 5♦, 5♠', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 10, suit: '♥'}),
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 5, suit: '♠'})
+                ];
+                expect(poker._matcher()).toEqual('four-of-kind');
+            });
+
+            it('Joker, 5♥, 5♠, Joker, A♥', function () {
+                poker.board = [
+                    new Card({value: 0}),
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 5, suit: '♠'}),
+                    new Card({value: 0}),
+                    new Card({value: 14, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('four-of-kind');
+            });
+        });
+
+        // Full House
+        describe('as the "Full House" for Cards', function () {
+            it('5♥, 5♣, 10♥, 5♦, 10♠', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 5, suit: '♣'}),
+                    new Card({value: 10, suit: '♥'}),
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 10, suit: '♠'})
+                ];
+                expect(poker._matcher()).toEqual('full-house');
+            });
+
+            it('5♥, Joker, 10♥, 5♦, 10♠', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 10, suit: '♥'}),
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 10, suit: '♠'})
+                ];
+                expect(poker._matcher()).toEqual('full-house');
+            });
+        });
+
+        // Flush
+        describe('as the "Flush" for Cards', function () {
+            it('5♥, 3♥, 10♥, A♥, 2♥', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 10, suit: '♥'}),
+                    new Card({value: 14, suit: '♥'}),
+                    new Card({value: 2, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('flush');
+            });
+
+            it('5♥, Joker, 10♥, A♥, 2♥', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 10, suit: '♥'}),
+                    new Card({value: 14, suit: '♥'}),
+                    new Card({value: 2, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('flush');
+            });
+
+            it('Joker, 3♥, 5♥, Joker, A♥', function () {
+                poker.board = [
+                    new Card({value: 0}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 14, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('flush');
+            });
+        });
+
+        // Straight
+        describe('as the "Straight" for Cards', function () {
+            it('5♦, 3♥, 2♣, 4♥, 6♥', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 2, suit: '♣'}),
+                    new Card({value: 4, suit: '♥'}),
+                    new Card({value: 6, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('straight');
+            });
+
+            it('5♦, 3♥, Joker, 4♥, 2♠', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 4, suit: '♥'}),
+                    new Card({value: 2, suit: '♠'})
+                ];
+                expect(poker._matcher()).toEqual('straight');
+            });
+
+            it('5♦, Joker, 2♠, Joker, 6♥', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 0}),
+                    new Card({value: 2, suit: '♠'}),
+                    new Card({value: 0}),
+                    new Card({value: 6, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('straight');
+            });
+        });
+
+        // Three of a Kind
+        describe('as the "Three of a Kind" for Cards', function () {
+            it('5♦, 5♥, 4♥, 5♣, 6♥', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 4, suit: '♥'}),
+                    new Card({value: 5, suit: '♣'}),
+                    new Card({value: 6, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('three-of-kind');
+            });
+
+            it('5♦, 3♥, Joker, 5♥, 6♥', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 6, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('three-of-kind');
+            });
+
+            it('5♦, Joker, 2♥, Joker, Q♥', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♦'}),
+                    new Card({value: 0}),
+                    new Card({value: 2, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 12, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('three-of-kind');
+            });
+        });
+
+        // Two Pairs
+        describe('as the "Two Pairs" for Cards', function () {
+            it('5♥, 6♦, 5♣, 6♥, 2♣', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 6, suit: '♦'}),
+                    new Card({value: 5, suit: '♣'}),
+                    new Card({value: 6, suit: '♥'}),
+                    new Card({value: 2, suit: '♣'})
+                ];
+                expect(poker._matcher()).toEqual('two-pairs');
+            });
+        });
+
+        // One Pair
+        describe('as the "One Pair" for Cards', function () {
+            it('5♥, 6♦, A♥, 6♥, 2♣', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 6, suit: '♦'}),
+                    new Card({value: 14, suit: '♥'}),
+                    new Card({value: 6, suit: '♥'}),
+                    new Card({value: 2, suit: '♣'})
+                ];
+                expect(poker._matcher()).toEqual('one-pair');
+            });
+
+            it('5♥, 6♦, A♥, Joker, 2♣', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 6, suit: '♦'}),
+                    new Card({value: 14, suit: '♥'}),
+                    new Card({value: 0}),
+                    new Card({value: 2, suit: '♣'})
+                ];
+                expect(poker._matcher()).toEqual('one-pair');
+            });
+        });
+
+        // Nothing
+        describe('as the "Nothing" for Cards', function () {
+            it('5♥, 3♥, A♦, 6♣, 2♣', function () {
+                poker.board = [
+                    new Card({value: 5, suit: '♥'}),
+                    new Card({value: 3, suit: '♥'}),
+                    new Card({value: 14, suit: '♦'}),
+                    new Card({value: 6, suit: '♣'}),
+                    new Card({value: 2, suit: '♣'})
+                ];
+                expect(poker._matcher()).toEqual(null);
             });
         });
     });
