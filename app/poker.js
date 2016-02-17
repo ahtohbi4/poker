@@ -341,7 +341,7 @@ define([
 
         switch (true) {
             case this._isStraightFlash():
-                result = 'straight-flash';
+                result = 'straight-flush';
                 break;
             case this._isFourOfKind():
                 result = 'four-of-kind';
@@ -380,6 +380,8 @@ define([
     Poker.prototype._isStraightFlash = function () {
         var result;
 
+        result = this._isStraight() && this._isFlush();
+
         return result;
     };
 
@@ -411,13 +413,13 @@ define([
      * @private
      */
     Poker.prototype._isFlush = function () {
-    var result;
+        var result;
 
-    result = this._noJokersBoard.every(function (card, index, board) {
+        result = this._noJokersBoard.every(function (card, index, board) {
             return (index === 0 || card.suit === board[index - 1].suit);
-    });
+        });
 
-    return result;
+        return result;
     };
 
     /**
