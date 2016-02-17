@@ -491,6 +491,12 @@ define([
     Poker.prototype._isThreeOfKind = function () {
         var result;
 
+        for (var value in this._boardsMatches) {
+            if (this._boardsMatches[value] == 3) {
+                result = true;
+            }
+        }
+
         return result;
     };
 
@@ -500,7 +506,16 @@ define([
      * @private
      */
     Poker.prototype._isTwoPair = function () {
-        var result;
+        var result,
+            pairNumber = 0;
+
+        for (var value in this._boardsMatches) {
+            if (this._boardsMatches[value] == 2) {
+                ++pairNumber;
+            }
+        }
+
+        result = (pairNumber == 2) ? true : false;
 
         return result;
     };
@@ -511,7 +526,16 @@ define([
      * @private
      */
     Poker.prototype._isOnePair = function () {
-        var result;
+        var result,
+            pairNumber = 0;
+
+        for (var value in this._boardsMatches) {
+            if (this._boardsMatches[value] == 2) {
+                ++pairNumber;
+            }
+        }
+
+        result = (pairNumber == 1) ? true : false;
 
         return result;
     };
