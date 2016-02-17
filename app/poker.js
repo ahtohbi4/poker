@@ -313,9 +313,63 @@ define([
                 break;
             default:
                 notification.send('Never mind, buddy... Try again!');
+                break;
         }
 
         return this;
+    };
+
+    Poker.prototype._matcher = function() {
+        var result,
+            _this = this;
+
+        this._sortedBoard = (function () {
+            var board = _this.board;
+
+            board.sort(function (a, b) {
+                return (a.value - b.value);
+            });
+
+            return board;
+        })();
+        this._noJokersBoard = this._sortedBoard.filter(function (card) {
+            return (card.value !== 0);
+        });
+        this._jokersBoard = this._sortedBoard.filter(function (card) {
+            return (card.value === 0);
+        });
+
+        switch (true) {
+            case this._isStraightFlash():
+                result = 'straight-flash';
+                break;
+            case this._isFourOfKind():
+                result = 'four-of-kind';
+                break;
+            case this._isFullHouse():
+                result = 'full-house';
+                break;
+            case this._isFlush():
+                result = 'flush';
+                break;
+            case this._isStraight():
+                result = 'straight';
+                break;
+            case this._isThreeOfKind():
+                result = 'three-of-kind';
+                break;
+            case this._isTwoPair():
+                result = 'two-pairs';
+                break;
+            case this._isOnePair():
+                result = 'one-pair';
+                break;
+            default:
+                result = null;
+                break;
+        }
+
+        return result;
     };
 
     /**
@@ -357,16 +411,13 @@ define([
      * @private
      */
     Poker.prototype._isFlush = function () {
-        var result,
-            noJokersBoard = this.board.filter(function (card) {
-                return (card.value !== 0);
-            });
+    var result;
 
-        result = noJokersBoard.every(function (card, i, board) {
-            return (i === 0 || card.suit === board[i - 1].suit);
-        });
+    result = this._noJokersBoard.every(function (card, index, board) {
+            return (index === 0 || card.suit === board[index - 1].suit);
+    });
 
-        return result;
+    return result;
     };
 
     /**
@@ -375,7 +426,21 @@ define([
      * @private
      */
     Poker.prototype._isStraight = function () {
-        var result;
+        var result = true,
+            _this = this;
+
+        this._noJokersBoard.forEach(function (card, index, board) {
+            if (index > 0) {
+                    var prevCard = board[index - 1];
+
+                    if ((card.value - prevCard.value) > 0 && (card.value - prevCard.value) <= _this._jokersBoard.length + 1) {
+                        _this._jokersBoard.splice(0, card.value - prevCard.value - 1);
+                        result = result && true;
+                } else {
+                        result = false;
+                }
+            }
+        });
 
         return result;
     };
@@ -408,16 +473,7 @@ define([
      * @private
      */
     Poker.prototype._isOnePair = function () {
-        var result,
-            boardsValues = this.board.map(function (card) {
-                return card.value;
-            });
-
-        boardsValues.sort(function (a, b) {
-            return a - b;
-        });
-
-        debugger;
+        var result;
 
         return result;
     };
