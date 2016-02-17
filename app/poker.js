@@ -338,6 +338,29 @@ define([
         this._jokersBoard = this._sortedBoard.filter(function (card) {
             return (card.value === 0);
         });
+        this._boardsMatches = (function () {
+            var result = {};
+
+            _this._noJokersBoard.forEach(function (card, index, board) {
+                if (index > 0) {
+                    if (card.value == board[index - 1].value) {
+                        result[card.value] = ++result[card.value] || 2;
+                    }
+                }
+            });
+
+            if (_this._jokersBoard.length > 0) {
+                if (Object.keys(result).length > 0) {
+                    var values = Object.keys(result);
+
+                    result[values[values.length - 1]] += _this._jokersBoard.length;
+                } else {
+                    result[_this._noJokersBoard[_this._noJokersBoard.length - 1].value] = _this._jokersBoard.length + 1;
+                }
+            }
+
+            return result;
+        })();
 
         switch (true) {
             case this._isStraightFlash():
@@ -391,7 +414,13 @@ define([
      * @private
      */
     Poker.prototype._isFourOfKind = function () {
-        var result;
+        var result = false;
+
+        for (var value in this._boardsMatches) {
+            if (this._boardsMatches[value] == 4) {
+                result = true;
+            }
+        }
 
         return result;
     };
@@ -402,7 +431,14 @@ define([
      * @private
      */
     Poker.prototype._isFullHouse = function () {
-        var result;
+        var result,
+            matchesCount = 0;
+
+        for (var value in this._boardsMatches) {
+            matchesCount += this._boardsMatches[value];
+        }
+
+        result = (matchesCount == 5) ? true : false;
 
         return result;
     };
