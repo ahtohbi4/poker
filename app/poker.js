@@ -319,6 +319,12 @@ define([
         return this;
     };
 
+    /**
+     * @method - Checks if the board match with the Poker combination
+     * @returns {null|string} - One of the set [null, 'straight-flush', 'four-of-kind', 'full-house', 'flush',
+     *                          'straight', 'three-of-kind', 'two-pairs', 'one-pair']
+     * @private
+     */
     Poker.prototype._matcher = function() {
         var result,
             _this = this;
@@ -396,7 +402,7 @@ define([
     };
 
     /**
-     * @method Check for "Straight flush"
+     * @method - Check for "Straight flush"
      * @returns {boolean}
      * @private
      */
@@ -409,7 +415,7 @@ define([
     };
 
     /**
-     * @method Check for "Four of a kind"
+     * @method - Check for "Four of a kind"
      * @returns {boolean}
      * @private
      */
@@ -426,7 +432,7 @@ define([
     };
 
     /**
-     * @method Check for "Full house"
+     * @method - Check for "Full house"
      * @returns {boolean}
      * @private
      */
@@ -444,7 +450,7 @@ define([
     };
 
     /**
-     * @method Check for "Flush"
+     * @method - Check for "Flush"
      * @returns {boolean}
      * @private
      */
@@ -459,23 +465,23 @@ define([
     };
 
     /**
-     * @method Check for "Straight"
+     * @method - Check for "Straight"
      * @returns {boolean}
      * @private
      */
     Poker.prototype._isStraight = function () {
         var result = true,
-            _this = this;
+            jokersBoard = this._jokersBoard;
 
         this._noJokersBoard.forEach(function (card, index, board) {
             if (index > 0) {
-                    var prevCard = board[index - 1];
+                var prevCard = board[index - 1];
 
-                    if ((card.value - prevCard.value) > 0 && (card.value - prevCard.value) <= _this._jokersBoard.length + 1) {
-                        _this._jokersBoard.splice(0, card.value - prevCard.value - 1);
-                        result = result && true;
+                if ((card.value - prevCard.value) > 0 && (card.value - prevCard.value) <= jokersBoard.length + 1) {
+                    jokersBoard.splice(0, card.value - prevCard.value - 1);
+                    result = result && true;
                 } else {
-                        result = false;
+                    result = false;
                 }
             }
         });
@@ -484,7 +490,7 @@ define([
     };
 
     /**
-     * @method Check for "Three of a kind"
+     * @method - Check for "Three of a kind"
      * @returns {boolean}
      * @private
      */
@@ -501,7 +507,7 @@ define([
     };
 
     /**
-     * @method Check for "Two pair"
+     * @method - Check for "Two pair"
      * @returns {boolean}
      * @private
      */
@@ -521,7 +527,7 @@ define([
     };
 
     /**
-     * @method Check for "One pair"
+     * @method - Check for "One pair"
      * @returns {boolean}
      * @private
      */
