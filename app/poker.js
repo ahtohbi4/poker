@@ -337,7 +337,7 @@ define([
             });
 
             return board;
-        })();
+        }());
         this._noJokersBoard = this._sortedBoard.filter(function (card) {
             return (card.value !== 0);
         });
@@ -349,7 +349,7 @@ define([
 
             _this._noJokersBoard.forEach(function (card, index, board) {
                 if (index > 0) {
-                    if (card.value == board[index - 1].value) {
+                    if (card.value === board[index - 1].value) {
                         result[card.value] = ++result[card.value] || 2;
                     }
                 }
@@ -366,7 +366,7 @@ define([
             }
 
             return result;
-        })();
+        }());
 
         switch (true) {
             case this._isStraightFlash():
@@ -423,7 +423,7 @@ define([
         var result = false;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches[value] == 4) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 4) {
                 result = true;
             }
         }
@@ -441,7 +441,9 @@ define([
             matchesCount = 0;
 
         for (var value in this._boardsMatches) {
-            matchesCount += this._boardsMatches[value];
+            if (this._boardsMatches.hasOwnProperty(value)) {
+                matchesCount += this._boardsMatches[value];
+            }
         }
 
         result = (matchesCount == 5) ? true : false;
@@ -498,7 +500,7 @@ define([
         var result;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches[value] == 3) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 3) {
                 result = true;
             }
         }
@@ -516,7 +518,7 @@ define([
             pairNumber = 0;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches[value] == 2) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 2) {
                 ++pairNumber;
             }
         }
@@ -536,7 +538,7 @@ define([
             pairNumber = 0;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches[value] == 2) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 2) {
                 ++pairNumber;
             }
         }
