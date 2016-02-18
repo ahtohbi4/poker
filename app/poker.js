@@ -423,7 +423,7 @@ define([
         var result = false;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 4) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 4) {
                 result = true;
             }
         }
@@ -446,7 +446,7 @@ define([
             }
         }
 
-        result = (matchesCount == 5) ? true : false;
+        result = (matchesCount === 5) ? true : false;
 
         return result;
     };
@@ -500,7 +500,7 @@ define([
         var result;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 3) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 3) {
                 result = true;
             }
         }
@@ -518,12 +518,12 @@ define([
             pairNumber = 0;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 2) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 2) {
                 ++pairNumber;
             }
         }
 
-        result = (pairNumber == 2) ? true : false;
+        result = (pairNumber === 2) ? true : false;
 
         return result;
     };
@@ -538,12 +538,12 @@ define([
             pairNumber = 0;
 
         for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] == 2) {
+            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 2) {
                 ++pairNumber;
             }
         }
 
-        result = (pairNumber == 1) ? true : false;
+        result = (pairNumber === 1) ? true : false;
 
         return result;
     };
