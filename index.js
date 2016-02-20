@@ -39,5 +39,5 @@ require([
 });
 
 requirejs([
-    'app/main'
+    'app/app'
 ]);

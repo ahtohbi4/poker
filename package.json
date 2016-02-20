@@ -1,0 +1,27 @@
+{
+  "name": "poker",
+  "version": "1.0.0",
+  "description": "Poger Game with require.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahtohbi4/poker.git"
+  },
+  "author": "Alexandr Antonov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ahtohbi4/poker/issues"
+  },
+  "homepage": "https://github.com/ahtohbi4/poker#readme",
+  "devDependencies": {
+    "autoprefixer": "^6.3.3",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-postcss": "^6.1.0",
+    "normalize.css": "^3.0.3",
+    "postcss-import": "^8.0.2"
+  }
+}

@@ -15,7 +15,6 @@ define([
          * @param {number} [options.title=<options.rank options.suit>] - Title placed on face of the Card.
          * @param {string} options.suit - Suit.
          * @param {boolean} [options.isFaceUp=false] - The Card laid on the table face-up.
-         * @param {boolean} [options.isSelectable=false] - The Card is selectable.
          */
         if (typeof options == 'undefined') {
             throw new Error('Required params for object Card was missed.');
@@ -36,9 +35,10 @@ define([
 
             this.isFaceUp = options.isFaceUp || false;
 
-            this.isSelectable = options.isSelectable || false;
-
-            this.view = $('<div>').addClass('card');
+            this.view = $('<div class="card__container"><div class="card"></div></div>');
+            this.view.css({
+                transform: 'rotateZ(' + (Math.random() * 14 - 7) + 'deg) translateY(' + (Math.random() * 14 - 7) + 'px)'
+            });
         }
 
         return this;
@@ -52,20 +52,12 @@ define([
         var _this = this;
         this.isFaceUp = isFaceUp || this.isFaceUp;
 
-        this.view
+        this.view.find('.card')
             .attr('data-title', function () {
                 return _this.isFaceUp ? _this.title : null;
             })
             .toggleClass('card_face-up', this.isFaceUp);
 
-        return this;
-    };
-
-    /**
-     * @method
-     * @returns {Card}
-     */
-    Card.prototype.selectable = function (isSelectable) {
         return this;
     };
 

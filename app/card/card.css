@@ -1,50 +1,6 @@
-html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    color: #fff;
-}
-
-.poker {
-    height: 100%;
-    min-height: 200px;
-    background: #555;
-}
-.poker__count {
-    position: relative;
-}
-.poker__count::before {
-    content: attr(data-currency);
-}
-
-.button {
-  display: inline-block;
-  box-sizing: content-box;
-  cursor: pointer;
-  padding: 9px 20px;
-  border: none;
-  border-radius: 2px;
-  font: normal 18px/27px Arial, Helvetica, sans-serif;
-  color: #fff;
-  background: #62ac15;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
-}
-.button:hover {
-  background: #6fba22;
-  transition: all 200ms cubic-bezier(.5, 0, .5, 1) 10ms;
-}
-.button:active {
-  background: #62ac15;
-  box-shadow: 0 1px 4px 0 rgb(65,105,23) inset;
-}
-
 .card {
     position: relative;
+    left: -75px;
     width: 150px;
     height: 200px;
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0) 25%, rgba(255, 255, 255, .2) 25%, rgba(255, 255, 255, .2) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, .2) 75%), linear-gradient(45deg, rgba(0, 0, 0, 0) 25%, rgba(255, 255, 255, .2) 25%, rgba(255, 255, 255, .2) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 75%, rgba(255, 255, 255, .2) 75%), rgb(0, 153, 151);
@@ -52,6 +8,9 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 3px rgba(0, 0, 0, .2), 0 0 10px rgba(0, 0, 0, .3);
     color: #333;
+}
+.card__container {
+    width: 0;
 }
 .card_face-up {
     background: #fff;
