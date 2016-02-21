@@ -480,7 +480,7 @@ define([
                 var prevCard = board[index - 1];
 
                 if ((card.value - prevCard.value) > 0 && (card.value - prevCard.value) <= jokersBoard.length + 1) {
-                    jokersBoard.splice(0, card.value - prevCard.value - 1);
+                    jokersBoard = jokersBoard.slice(0, card.value - prevCard.value - 1);
                     result = result && true;
                 } else {
                     result = false;
