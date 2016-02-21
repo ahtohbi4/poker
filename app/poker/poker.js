@@ -25,6 +25,45 @@ define([
          */
         this._BETS = options.bets || [10, 50, 100, 500];
 
+        this._HANDS = {
+            'straight-flush': {
+                name: 'Straight Flash',
+                index: 500
+            },
+            'four-of-kind': {
+                name: 'Four of Kind',
+                index: 100
+            },
+            'full-house': {
+                name: 'Full House',
+                index: 50
+            },
+            'flush': {
+                name: 'Flush',
+                index: 30
+            },
+            'straight': {
+                name: 'Straight',
+                index: 15
+            },
+            'three-of-kind': {
+                name: 'Three of Kind',
+                index: 10
+            },
+            'two-pairs': {
+                name: 'Two Pair',
+                index: 4
+            },
+            'one-pair': {
+                name: 'One Pair',
+                index: 2
+            },
+            null: {
+                name: 'Nothing',
+                index: 0
+            }
+        };
+
         /**
          * @property {array} - Array of the Board cards
          * @public
@@ -122,7 +161,7 @@ define([
         this.deck = new Deck();
         this.deck.shuffle();
 
-        this.board = this.deck.getCards(3);
+        this.board = this.deck.getCards(5);
         this._repaintBoard();
 
         // Set Controls
@@ -286,35 +325,37 @@ define([
             }
         ]);
 
-        switch (true) {
-            case this._isStraightFlash():
-                notification.send('Great, Lucky! You have "Straight Flash"!');
-                break;
-            case this._isFourOfKind():
-                notification.send('Awesome! You get "Four of Kind".');
-                break;
-            case this._isFullHouse():
-                notification.send('"Full House"');
-                break;
-            case this._isFlush():
-                notification.send('"Flush"');
-                break;
-            case this._isStraight():
-                notification.send('"Straight"');
-                break;
-            case this._isThreeOfKind():
-                notification.send('"Three of Kind"! Let\'s try to get more?');
-                break;
-            case this._isTwoPair():
-                notification.send('Not bad! It\'s "Two Pair".');
-                break;
-            case this._isOnePair():
-                notification.send('You have "One Pair"! Play again?');
-                break;
-            default:
-                notification.send('Never mind, buddy... Try again!');
-                break;
-        }
+        notification.send(this._HANDS[this._matcher()].name);
+
+        // switch (true) {
+        //     case this._isStraightFlash():
+        //         notification.send('Great, Lucky! You have "Straight Flash"!');
+        //         break;
+        //     case this._isFourOfKind():
+        //         notification.send('Awesome! You get "Four of Kind".');
+        //         break;
+        //     case this._isFullHouse():
+        //         notification.send('"Full House"');
+        //         break;
+        //     case this._isFlush():
+        //         notification.send('"Flush"');
+        //         break;
+        //     case this._isStraight():
+        //         notification.send('"Straight"');
+        //         break;
+        //     case this._isThreeOfKind():
+        //         notification.send('"Three of Kind"! Let\'s try to get more?');
+        //         break;
+        //     case this._isTwoPair():
+        //         notification.send('Not bad! It\'s "Two Pair".');
+        //         break;
+        //     case this._isOnePair():
+        //         notification.send('You have "One Pair"! Play again?');
+        //         break;
+        //     default:
+        //         notification.send('Never mind, buddy... Try again!');
+        //         break;
+        // }
 
         return this;
     };
