@@ -1,8 +1,8 @@
 define([
     'jquery',
-    'app/button',
-    'app/deck',
-    'app/notification'
+    'app/button/button',
+    'app/deck/deck',
+    'app/notification/notification'
 ], function ($, Button, Deck, Notification) {
     'use strict';
 

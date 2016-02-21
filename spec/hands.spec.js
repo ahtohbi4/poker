@@ -1,6 +1,6 @@
 define([
-    'app/card',
-    'app/poker'
+    'app/card/card',
+    'app/poker/poker'
 ], function (Card, Poker){
     var poker = new Poker();
 

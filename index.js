@@ -1,17 +1,18 @@
 requirejs.config({
-    baseUrl: 'lib',
+    baseUrl: './',
     paths: {
-        app: '../app',
+        app: 'app',
+        jquery: 'lib/jquery',
         jasmine: [
-            '../lib/jasmine/lib/jasmine-2.4.1/jasmine'
+            'lib/jasmine/lib/jasmine-2.4.1/jasmine'
         ],
         'jasmine-html': [
-            '../lib/jasmine/lib/jasmine-2.4.1/jasmine-html'
+            'lib/jasmine/lib/jasmine-2.4.1/jasmine-html'
         ],
         'jasmine-boot': [
-            '../lib/jasmine/lib/jasmine-2.4.1/boot'
+            'lib/jasmine/lib/jasmine-2.4.1/boot'
         ],
-        spec: '../spec'
+        spec: 'spec'
     },
     shim: {
         'jasmine-html': {

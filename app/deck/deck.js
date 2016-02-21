@@ -1,5 +1,5 @@
 define([
-    'app/card'
+    'app/card/card'
 ], function (Card) {
     'use strict';
 
