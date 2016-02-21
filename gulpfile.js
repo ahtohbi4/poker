@@ -38,3 +38,11 @@ gulp.task('css', [
 gulp.task('default', [
     'css'
 ]);
+
+gulp.task('watch', function () {
+    gulp.watch([
+        'app/**/*.css'
+    ], [
+        'css'
+    ]);
+});
