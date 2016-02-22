@@ -28,15 +28,15 @@ define([
         this._HANDS = {
             'straight-flush': {
                 name: 'Straight Flash',
-                index: 500
+                index: 3500
             },
             'four-of-kind': {
                 name: 'Four of Kind',
-                index: 100
+                index: 600
             },
             'full-house': {
                 name: 'Full House',
-                index: 50
+                index: 40
             },
             'flush': {
                 name: 'Flush',
@@ -44,11 +44,11 @@ define([
             },
             'straight': {
                 name: 'Straight',
-                index: 15
+                index: 25
             },
             'three-of-kind': {
                 name: 'Three of Kind',
-                index: 10
+                index: 20
             },
             'two-pairs': {
                 name: 'Two Pair',
@@ -325,37 +325,21 @@ define([
             }
         ]);
 
-        notification.send(this._HANDS[this._matcher()].name);
+        var combinationAlias = this._matcher();
 
-        // switch (true) {
-        //     case this._isStraightFlash():
-        //         notification.send('Great, Lucky! You have "Straight Flash"!');
-        //         break;
-        //     case this._isFourOfKind():
-        //         notification.send('Awesome! You get "Four of Kind".');
-        //         break;
-        //     case this._isFullHouse():
-        //         notification.send('"Full House"');
-        //         break;
-        //     case this._isFlush():
-        //         notification.send('"Flush"');
-        //         break;
-        //     case this._isStraight():
-        //         notification.send('"Straight"');
-        //         break;
-        //     case this._isThreeOfKind():
-        //         notification.send('"Three of Kind"! Let\'s try to get more?');
-        //         break;
-        //     case this._isTwoPair():
-        //         notification.send('Not bad! It\'s "Two Pair".');
-        //         break;
-        //     case this._isOnePair():
-        //         notification.send('You have "One Pair"! Play again?');
-        //         break;
-        //     default:
-        //         notification.send('Never mind, buddy... Try again!');
-        //         break;
-        // }
+        if (combinationAlias === null) {
+            notification.send('Never mind, buddy... Try again!');
+        } else {
+            var congratulation = [
+                'Great, Lucky! You have "%combination%"!',
+                'Awesome! You get "%combination%".',
+                '"%combination%"! Let\'s try to get more?',
+                'Not bad! It\'s "%combination%".',
+                'You have "%combination%"! Play again?'
+            ];
+
+            notification.send(congratulation[Math.floor(Math.random() * congratulation.length)].replace(/%combination%/i, this._HANDS[combinationAlias].name));
+        }
 
         return this;
     };
