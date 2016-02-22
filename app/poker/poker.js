@@ -326,6 +326,7 @@ define([
         ]);
 
         var combinationAlias = this._matcher();
+        var combination = this._HANDS[combinationAlias];
 
         if (combinationAlias === null) {
             notification.send('Never mind, buddy... Try again!');
@@ -338,7 +339,9 @@ define([
                 'You have "%combination%"! Play again?'
             ];
 
-            notification.send(congratulation[Math.floor(Math.random() * congratulation.length)].replace(/%combination%/i, this._HANDS[combinationAlias].name));
+            this._setDeposit(this.deposit + this.bet * combination.index);
+
+            notification.send(congratulation[Math.floor(Math.random() * congratulation.length)].replace(/%combination%/i, combination.name));
         }
 
         return this;
