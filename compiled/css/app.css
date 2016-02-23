@@ -512,9 +512,18 @@ html {
 }
 
 .poker {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
     height: 100%;
     min-height: 200px;
-    background: #555;
+    background: #444;
 }
 
 .poker__deposit {
@@ -523,6 +532,13 @@ html {
 
 .poker__deposit::before {
     content: attr(data-currency);
+}
+
+.poker__notification {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
 }
 
 .poker__board {

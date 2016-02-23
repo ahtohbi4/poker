@@ -1,13 +1,18 @@
 .poker {
+    display: flex;
+    flex-direction: column;
     height: 100%;
     min-height: 200px;
-    background: #555;
+    background: #444;
 }
 .poker__deposit {
     position: relative;
 }
 .poker__deposit::before {
     content: attr(data-currency);
+}
+.poker__notification {
+    flex-grow: 1;
 }
 .poker__board {
     display: flex;
