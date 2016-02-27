@@ -151,6 +151,17 @@ define([
                 expect(poker._matcher()).toEqual('straight');
             });
 
+            it('J♠, Joker, Q♥, 10♠, A♠', function () {
+                poker.board = [
+                    new Card({value: 11, suit: '♠'}),
+                    new Card({value: 0}),
+                    new Card({value: 12, suit: '♥'}),
+                    new Card({value: 10, suit: '♠'}),
+                    new Card({value: 14, suit: '♠'})
+                ];
+                expect(poker._matcher()).toEqual('straight');
+            });
+
             it('5♦, 3♥, Joker, 4♥, 2♠', function () {
                 poker.board = [
                     new Card({value: 5, suit: '♦'}),
