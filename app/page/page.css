@@ -2,10 +2,12 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Arimo', sans-serif;
 }
 .page {
     height: 100%;
+    box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding: 18px 20px 0;
     color: #fff;
 }

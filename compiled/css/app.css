@@ -502,13 +502,20 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Arimo', sans-serif;
 }
 
 .page {
     height: 100%;
+    box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding: 18px 20px 0;
     color: #fff;
+}
+
+h1 {
+    margin: 0 0 27px;
+    font-weight: 100;
 }
 
 .poker {
@@ -554,6 +561,7 @@ html {
     -webkit-justify-content: space-around;
         -ms-flex-pack: distribute;
             justify-content: space-around;
+    margin-bottom: 27px;
     padding: 0 50px;
 }
 
@@ -576,4 +584,21 @@ html {
     -webkit-transform: translateY(0);
         -ms-transform: translateY(0);
             transform: translateY(0);
+}
+
+.poker__controls {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+    margin-bottom: 27px;
+}
+
+.poker__controls .button {
+    -webkit-flex-basis: 20%;
+        -ms-flex-preferred-size: 20%;
+            flex-basis: 20%;
 }

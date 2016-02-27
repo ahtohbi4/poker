@@ -25,7 +25,8 @@ gulp.task('clean', function() {
 gulp.task('css', [
     'clean-css'
 ], function () {
-    return gulp.src('./app/app.css')
+    return gulp
+        .src('./app/app.css')
         .pipe(postcss([
             atImport(),
             autoprefixer({
