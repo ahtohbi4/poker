@@ -355,7 +355,7 @@ define([
         }
 
         return this;
-    }
+    };
 
     /**
      * @method - Checks if the board match with the Poker combination
