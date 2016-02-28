@@ -3,6 +3,7 @@ requirejs.config({
     paths: {
         app: 'app',
         jquery: 'lib/jquery',
+        underscore: 'lib/underscore-min',
         jasmine: [
             'lib/jasmine/lib/jasmine-2.4.1/jasmine'
         ],

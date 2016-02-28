@@ -1,9 +1,10 @@
 define([
     'jquery',
+    'underscore',
     'app/button/button',
     'app/deck/deck',
     'app/notification/notification'
-], function ($, Button, Deck, Notification) {
+], function ($, _, Button, Deck, Notification) {
     'use strict';
 
     var notification = new Notification();
@@ -25,6 +26,10 @@ define([
          */
         this._BETS = options.bets || [10, 50, 100, 500];
 
+        /**
+         * @const {object}
+         * @private
+         */
         this._HANDS = {
             'straight-flush': {
                 name: 'Straight Flash',
@@ -332,16 +337,21 @@ define([
             notification.send('Never mind, buddy... Try again!');
         } else {
             var congratulation = [
-                'Great, Lucky! You have "%combination%"!',
-                'Awesome! You get "%combination%".',
-                '"%combination%"! Let\'s try to get more?',
-                'Not bad! It\'s "%combination%".',
-                'You have "%combination%"! Play again?'
+                'Great, Lucky! You have "<%= combination %>"! Get your $<%= payout %>.',
+                'Awesome! You have "<%= combination %>". Get your $<%= payout %>.',
+                '"<%= combination %>"! Get your $<%= payout %>. Let\'s try to get more?',
+                'Not bad! It\'s "<%= combination %>". Get your $<%= payout %>.',
+                'You have "<%= combination %>"! Get your $<%= payout %>. Play again?'
             ];
 
-            this._setDeposit(this.deposit + this.bet * combination.index);
+            var payout = this.bet * combination.index - this.bet;
 
-            notification.send(congratulation[Math.floor(Math.random() * congratulation.length)].replace(/%combination%/i, combination.name));
+            notification.send(_.template(congratulation[Math.floor(Math.random() * congratulation.length)])({
+                combination: combination.name,
+                payout: this.bet * combination.index
+            }));
+
+            this._setDeposit(this.deposit + payout);
         }
 
         return this;
