@@ -1,3 +1,9 @@
 .notification {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     margin-bottom: 27px;
+}
+.notification__message {
+    text-align: center;
 }

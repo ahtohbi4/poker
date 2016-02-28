@@ -7,6 +7,8 @@ define([
         this._LIFETIME = 5000;
         this._FADING_OUT_TIME = 1000;
 
+        this.messages = [];
+
         return this;
     }
 
@@ -26,11 +28,19 @@ define([
      * @returns {jQuery}
      * @private
      */
-    Notification.prototype._addMessage = function (text) {
+    Notification.prototype._createMessage = function (text) {
         var message = $('<div class="notification__message">').text(text);
 
         var removeMessage = this._removeMessage(message);
         setTimeout(removeMessage, this._LIFETIME);
+
+        var lastMessage = this.messages[this.messages.length - 1];
+        if (typeof lastMessage !== 'undefined') {
+            lastMessage.animate({
+                opacity: .3
+            }, 1000);
+        }
+        this.messages.push(message);
 
         return message;
     };
@@ -56,7 +66,9 @@ define([
      * @public
      */
     Notification.prototype.send = function (text) {
-        this._getElem('container').prepend(this._addMessage(text || ''));
+        var message = this._createMessage(text || '');
+
+        this._getElem('container').append(message);
 
         return this;
     };
