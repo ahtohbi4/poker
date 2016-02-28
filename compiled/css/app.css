@@ -534,7 +534,15 @@ h1 {
 }
 
 .poker__deposit {
-    position: relative;
+    position: absolute;
+    top: 27px;
+    right: 20px;
+}
+
+.poker__bet {
+    position: absolute;
+    top: 54px;
+    right: 20px;
 }
 
 .poker__deposit::before {
