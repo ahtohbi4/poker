@@ -3,6 +3,7 @@ var del = require('del');
 var postcss = require('gulp-postcss');
 var atImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
+var cssnano = require('cssnano');
 
 gulp.task('clean-css', function () {
     return del([
@@ -25,7 +26,8 @@ gulp.task('css', [
             atImport(),
             autoprefixer({
                 browsers: ['last 5 version']
-            })
+            }),
+            cssnano()
         ]))
         .pipe(gulp.dest('./compiled/css'));
 });

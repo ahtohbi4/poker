@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ahtohbi4/poker#readme",
   "devDependencies": {
     "autoprefixer": "^6.3.3",
+    "cssnano": "^3.5.2",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.1.0",
