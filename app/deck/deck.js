@@ -117,7 +117,7 @@ define([
         }, this);
 
         return this;
-    };
+    }
 
     /**
      * @method

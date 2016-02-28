@@ -37,7 +37,7 @@ require([
         'spec/hands.spec'
     ], function () {
         window.onload();
-    })
+    });
 });
 
 requirejs([
