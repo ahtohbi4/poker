@@ -4,13 +4,13 @@ var postcss = require('gulp-postcss');
 var atImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
 
-gulp.task('clean-css', function() {
+gulp.task('clean-css', function () {
     return del([
         'compiled/css'
     ]);
 });
 
-gulp.task('clean', function() {
+gulp.task('clean', function () {
     return del([
         'compiled'
     ]);
