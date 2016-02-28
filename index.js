@@ -1,3 +1,5 @@
+var ENV = 'prod';
+
 requirejs.config({
     baseUrl: './',
     paths: {
@@ -30,18 +32,20 @@ requirejs.config({
     }
 });
 
-require([
-    'jasmine-boot'
-], function () {
+if (ENV === 'dev') {
     require([
-        'jquery',
-        'spec/hands.spec'
-    ], function ($) {
-        $('body').append('<link rel="stylesheet" href="lib/jasmine/lib/jasmine-2.4.1/jasmine.css">');
+        'jasmine-boot'
+    ], function () {
+        require([
+            'jquery',
+            'spec/hands.spec'
+        ], function ($) {
+            $('body').append('<link rel="stylesheet" href="lib/jasmine/lib/jasmine-2.4.1/jasmine.css">');
 
-        window.onload();
+            window.onload();
+        });
     });
-});
+}
 
 requirejs([
     'app/app'
