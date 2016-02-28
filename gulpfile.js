@@ -10,12 +10,6 @@ gulp.task('clean-css', function() {
     ]);
 });
 
-gulp.task('clean-js', function() {
-    return del([
-        'compiled/js'
-    ]);
-});
-
 gulp.task('clean', function() {
     return del([
         'compiled'
