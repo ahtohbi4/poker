@@ -8,6 +8,9 @@ Poker
 [codacy-img]: https://api.codacy.com/project/badge/grade/49f010d195d2435a8b0037d78bb8ef46
 [codacy]: https://www.codacy.com/app/alexandr-post/poker
 
+#### About
+Poker game for single player. Free, without registration, no SMS.
+
 #### Architecture
  * [GitHub](https://github.com/) to host repository;
  * [BEM methodology](https://en.bem.info/method/) for architecture of app;
