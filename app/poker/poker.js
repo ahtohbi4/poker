@@ -33,35 +33,35 @@ define([
         this._HANDS = {
             'straight-flush': {
                 name: 'Straight Flash',
-                index: 3500
+                index: 150
             },
             'four-of-kind': {
                 name: 'Four of Kind',
-                index: 600
+                index: 25
             },
             'full-house': {
                 name: 'Full House',
-                index: 40
+                index: 9
             },
             'flush': {
                 name: 'Flush',
-                index: 30
+                index: 6
             },
             'straight': {
                 name: 'Straight',
-                index: 25
+                index: 4
             },
             'three-of-kind': {
                 name: 'Three of Kind',
-                index: 20
+                index: 3
             },
             'two-pairs': {
                 name: 'Two Pair',
-                index: 4
+                index: 3
             },
             'one-pair': {
                 name: 'One Pair',
-                index: 2
+                index: 1
             },
             null: {
                 name: 'Nothing',
@@ -344,7 +344,8 @@ define([
                 'You have "<%= combination %>"! Get your $<%= payout %>. Play again?'
             ];
 
-            var payout = this.bet * combination.index - this.bet;
+            // Calculate payout
+            var payout = this.bet * combination.index;
 
             notification.send(_.template(congratulation[Math.floor(Math.random() * congratulation.length)])({
                 combination: combination.name,
