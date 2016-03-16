@@ -37,7 +37,7 @@ define([
         var lastMessage = this.messages[this.messages.length - 1];
         if (typeof lastMessage !== 'undefined') {
             lastMessage.animate({
-                opacity: .3
+                opacity: 0.3
             }, 1000);
         }
         this.messages.push(message);
