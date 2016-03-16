@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Poger Game with require.js",
   "main": "index.js",
-  "scripts": {
-    "test": "npm test"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ahtohbi4/poker.git"
