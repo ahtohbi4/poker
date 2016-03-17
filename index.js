@@ -1,5 +1,3 @@
-var ENV = 'prod';
-
 requirejs.config({
     baseUrl: './',
     paths: {
@@ -32,7 +30,7 @@ requirejs.config({
     }
 });
 
-if (ENV === 'dev') {
+if (window.location.search.match(/(?:\?|&|&amp;)spec/i)) {
     require([
         'jasmine-boot'
     ], function () {
