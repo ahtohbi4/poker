@@ -30,7 +30,7 @@ requirejs.config({
     }
 });
 
-if (window.location.search.match(/(?:\?|&|&amp;)spec/i)) {
+if (window.location.search.match(/(?:\?|&|&amp;)env=dev/i)) {
     require([
         'jasmine-boot'
     ], function () {
