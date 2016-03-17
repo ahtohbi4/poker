@@ -6,15 +6,21 @@
     border: none;
     border-radius: 2px;
     font: normal 18px/27px Arial, Helvetica, sans-serif;
-    color: #fff;
+    outline: 0;
+    color: #f0f0f0;
     background: #62ac15;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+    box-shadow: 0 -1px 5px 0 #62ac15 inset;
 }
 .button:hover {
     background: #6fba22;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2), 0 1px 10px 0 rgba(0, 0, 0, .2), 0 -1px 5px 0 #62ac15 inset;
     transition: all 200ms cubic-bezier(.5, 0, .5, 1) 10ms;
+}
+.button:focus {
+    color: #fff;
 }
 .button:active {
     background: #62ac15;
-    box-shadow: 0 1px 4px 0 rgb(65,105,23) inset;
+    box-shadow: 0 -1px 5px 0 #62ac15 inset;
 }
