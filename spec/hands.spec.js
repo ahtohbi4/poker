@@ -258,6 +258,17 @@ define([
                 ];
                 expect(poker._matcher()).toEqual('one-pair');
             });
+
+            it('Joker', '9♥', '6♣', '8♦', '4♥', function () {
+                poker.board = [
+                    new Card({value: 0}),
+                    new Card({value: 9, suit: '♥'}),
+                    new Card({value: 6, suit: '♣'}),
+                    new Card({value: 8, suit: '♦'}),
+                    new Card({value: 4, suit: '♥'})
+                ];
+                expect(poker._matcher()).toEqual('one-pair');
+            });
         });
 
         // Nothing
@@ -269,17 +280,6 @@ define([
                     new Card({value: 14, suit: '♦'}),
                     new Card({value: 6, suit: '♣'}),
                     new Card({value: 2, suit: '♣'})
-                ];
-                expect(poker._matcher()).toEqual(null);
-            });
-
-            it('Joker', '9♥', '6♣', '8♦', '4♥', function () {
-                poker.board = [
-                    new Card({value: 0}),
-                    new Card({value: 9, suit: '♥'}),
-                    new Card({value: 6, suit: '♣'}),
-                    new Card({value: 8, suit: '♦'}),
-                    new Card({value: 4, suit: '♥'})
                 ];
                 expect(poker._matcher()).toEqual(null);
             });
