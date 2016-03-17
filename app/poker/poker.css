@@ -30,6 +30,11 @@
     margin-bottom: 27px;
     padding: 0 50px;
 }
+@media (max-width: 400px) {
+    .poker__board {
+        padding: 0 30px;
+    }
+}
 .poker__board .card__container {
     flex-grow: 0;
     width: 0;

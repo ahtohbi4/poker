@@ -9,6 +9,13 @@
     box-shadow: 0 0 3px rgba(0, 0, 0, .2), 0 0 10px rgba(0, 0, 0, .3);
     color: #333;
 }
+@media (max-width: 400px) {
+    .card {
+        left: -60px;
+        width: 120px;
+        height: 160px;
+    }
+}
 .card__container {
     width: 0;
 }
@@ -19,6 +26,12 @@
 .card_face-up::after {
     content: attr(data-title);
     font: 24px/27px Georgia;
+}
+@media (max-width: 400px) {
+    .card_face-up::before,
+    .card_face-up::after {
+        font: 18px/24px Georgia;
+    }
 }
 .card_face-up[data-title~=♥],
 .card_face-up[data-title~=♦] {
@@ -34,4 +47,14 @@
     bottom: 9px;
     left: 10px;
     transform: rotateZ(180deg);
+}
+@media (max-width: 400px) {
+    .card_face-up::before {
+        top: 6px;
+        right: 7px;
+    }
+    .card_face-up::after {
+        bottom: 6px;
+        left: 7px;
+    }
 }
