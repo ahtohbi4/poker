@@ -259,7 +259,7 @@ define([
                 expect(poker._matcher()).toEqual('one-pair');
             });
 
-            it('Joker', '9♥', '6♣', '8♦', '4♥', function () {
+            it('Joker, 9♥, 6♣, 8♦, 4♥', function () {
                 poker.board = [
                     new Card({value: 0}),
                     new Card({value: 9, suit: '♥'}),
