@@ -5,22 +5,19 @@
     padding: 9px 20px;
     border: none;
     border-radius: 3px;
-    font: normal 18px/27px Arial, Helvetica, sans-serif;
+    font: 100 18px/27px Arial, Helvetica, sans-serif;
     outline: 0;
-    color: #f0f0f0;
-    background: #62ac15;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
-    box-shadow: 0 -1px 5px 0 #62ac15 inset;
-}
-.button:hover {
-    background: #6fba22;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2), 0 1px 10px 0 rgba(0, 0, 0, .2), 0 -1px 5px 0 #62ac15 inset;
+    color: #fff;
+    background: #7fc925 linear-gradient(#acdd00, #7fc925);
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    box-shadow: 0 0 2px rgba(0, 0, 0, .7), 0 0 5px rgba(0, 0, 0, .4);
     transition: all 200ms cubic-bezier(.5, 0, .5, 1) 10ms;
 }
+.button:hover,
 .button:focus {
-    color: #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .7), 0 0 5px rgba(0, 0, 0, .4), inset 0 -19px 18px #acdd00;
 }
 .button:active {
     background: #62ac15;
-    box-shadow: 0 -1px 5px 0 #62ac15 inset;
+    box-shadow: inset 0 12px 28px #62ac15;
 }

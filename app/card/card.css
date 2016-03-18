@@ -35,7 +35,7 @@
 }
 .card_face-up[data-title~=♥],
 .card_face-up[data-title~=♦] {
-    color: #f30;
+    color: #ff3100;
 }
 .card_face-up::before {
     position: absolute;
