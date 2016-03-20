@@ -12,6 +12,7 @@ html {
 }
 .page {
     display: flex;
+    flex-direction: column;
     min-height: 100%;
     box-sizing: border-box;
     margin: 0;
