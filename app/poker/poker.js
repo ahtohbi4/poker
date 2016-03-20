@@ -295,6 +295,10 @@ define([
     Poker.prototype.changeCards = function () {
         var _this = this;
 
+        this.board.forEach(function (card) {
+            card.view.find('.card').removeClass('poker__card_selectable poker__card_selected');
+        });
+
         this.board = this.board.map(function (card) {
             if (!card.selected) {
                 card = _this.deck.getCard();
