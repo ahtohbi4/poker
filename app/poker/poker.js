@@ -368,72 +368,32 @@ define([
      *                          'straight', 'three-of-kind', 'two-pairs', 'one-pair']
      * @private
      */
-    Poker.prototype._matcher = function() {
-        var result,
-            _this = this;
-
-        this._sortedBoard = (function () {
-            var board = _this.board;
-
-            board.sort(function (a, b) {
-                return (a.value - b.value);
-            });
-
-            return board;
-        }());
-        this._noJokersBoard = this._sortedBoard.filter(function (card) {
-            return (card.value !== 0);
-        });
-        this._jokersBoard = this._sortedBoard.filter(function (card) {
-            return (card.value === 0);
-        });
-        this._boardsMatches = (function () {
-            var result = {};
-
-            _this._noJokersBoard.forEach(function (card, index, board) {
-                if (index > 0) {
-                    if (card.value === board[index - 1].value) {
-                        result[card.value] = ++result[card.value] || 2;
-                    }
-                }
-            });
-
-            if (_this._jokersBoard.length > 0) {
-                if (Object.keys(result).length > 0) {
-                    var values = Object.keys(result);
-
-                    result[values[values.length - 1]] += _this._jokersBoard.length;
-                } else {
-                    result[_this._noJokersBoard[_this._noJokersBoard.length - 1].value] = _this._jokersBoard.length + 1;
-                }
-            }
-
-            return result;
-        }());
+    Poker.prototype._matcher = function () {
+        var result;
 
         switch (true) {
-            case this._isStraightFlash():
+            case this._isStraightFlash(this.board):
                 result = 'straight-flush';
                 break;
-            case this._isFourOfKind():
+            case this._isFourOfKind(this.board):
                 result = 'four-of-kind';
                 break;
-            case this._isFullHouse():
+            case this._isFullHouse(this.board):
                 result = 'full-house';
                 break;
-            case this._isFlush():
+            case this._isFlush(this.board):
                 result = 'flush';
                 break;
-            case this._isStraight():
+            case this._isStraight(this.board):
                 result = 'straight';
                 break;
-            case this._isThreeOfKind():
+            case this._isThreeOfKind(this.board):
                 result = 'three-of-kind';
                 break;
-            case this._isTwoPair():
+            case this._isTwoPair(this.board):
                 result = 'two-pairs';
                 break;
-            case this._isOnePair():
+            case this._isOnePair(this.board):
                 result = 'one-pair';
                 break;
             default:
@@ -444,15 +404,57 @@ define([
         return result;
     };
 
+    Poker.prototype._getSortedBoard = function (board) {
+        return board.sort(function (a, b) {
+            return (a.value - b.value);
+        });
+    };
+
+    Poker.prototype._getNoJokersBoard = function (board) {
+        return this._getSortedBoard(board).filter(function (card) {
+            return (card.value !== 0);
+        });
+    };
+
+    Poker.prototype._getJokersBoard = function (board) {
+        return this._getSortedBoard(board).filter(function (card) {
+            return (card.value === 0);
+        });
+    };
+
+    Poker.prototype._getMatchesOfBoard = function (board) {
+        var result = {};
+
+        this._getNoJokersBoard(board).forEach(function (card, index, noJokersBoard) {
+            if (index > 0) {
+                if (card.value === noJokersBoard[index - 1].value) {
+                    result[card.value] = ++result[card.value] || 2;
+                }
+            }
+        });
+
+        if (this._getJokersBoard(board).length > 0) {
+            if (Object.keys(result).length > 0) {
+                var values = Object.keys(result);
+
+                result[values[values.length - 1]] += this._getJokersBoard(board).length;
+            } else {
+                result[this._getNoJokersBoard(board)[this._getNoJokersBoard(board).length - 1].value] = this._getJokersBoard(board).length + 1;
+            }
+        }
+
+        return result;
+    };
+
     /**
      * @method - Check for "Straight flush"
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isStraightFlash = function () {
+    Poker.prototype._isStraightFlash = function (board) {
         var result;
 
-        result = this._isStraight() && this._isFlush();
+        result = this._isStraight(board) && this._isFlush(board);
 
         return result;
     };
@@ -462,11 +464,11 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isFourOfKind = function () {
+    Poker.prototype._isFourOfKind = function (board) {
         var result = false;
 
-        for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 4) {
+        for (var value in this._getMatchesOfBoard(board)) {
+            if (this._getMatchesOfBoard(board).hasOwnProperty(value) && this._getMatchesOfBoard(board)[value] === 4) {
                 result = true;
             }
         }
@@ -479,13 +481,13 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isFullHouse = function () {
+    Poker.prototype._isFullHouse = function (board) {
         var result,
             matchesCount = 0;
 
-        for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value)) {
-                matchesCount += this._boardsMatches[value];
+        for (var value in this._getMatchesOfBoard(board)) {
+            if (this._getMatchesOfBoard(board).hasOwnProperty(value)) {
+                matchesCount += this._getMatchesOfBoard(board)[value];
             }
         }
 
@@ -499,11 +501,11 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isFlush = function () {
+    Poker.prototype._isFlush = function (board) {
         var result;
 
-        result = this._noJokersBoard.every(function (card, index, board) {
-            return (index === 0 || card.suit === board[index - 1].suit);
+        result = this._getNoJokersBoard(board).every(function (card, index, noJokersBoard) {
+            return (index === 0 || card.suit === noJokersBoard[index - 1].suit);
         });
 
         return result;
@@ -514,16 +516,20 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isStraight = function () {
+    Poker.prototype._isStraight = function (board) {
         var result = true,
-            jokersBoard = this._jokersBoard;
+            jokersBoard = this._getJokersBoard(board);
 
-        this._noJokersBoard.forEach(function (card, index, board) {
+        this._getNoJokersBoard(board).forEach(function (card, index, noJokersBoard) {
             if (index > 0) {
-                var prevCard = board[index - 1];
+                var prevCard = noJokersBoard[index - 1];
 
                 if ((card.value - prevCard.value) > 0 && (card.value - prevCard.value) <= jokersBoard.length + 1) {
-                    jokersBoard = jokersBoard.slice(0, card.value - prevCard.value - 1);
+                    var deficit = card.value - prevCard.value - 1;
+                    while (deficit--) {
+                        jokersBoard.pop();
+                    }
+
                     result = result && true;
                 } else {
                     result = false;
@@ -539,11 +545,11 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isThreeOfKind = function () {
+    Poker.prototype._isThreeOfKind = function (board) {
         var result;
 
-        for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 3) {
+        for (var value in this._getMatchesOfBoard(board)) {
+            if (this._getMatchesOfBoard(board).hasOwnProperty(value) && this._getMatchesOfBoard(board)[value] === 3) {
                 result = true;
             }
         }
@@ -556,12 +562,12 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isTwoPair = function () {
+    Poker.prototype._isTwoPair = function (board) {
         var result,
             pairNumber = 0;
 
-        for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 2) {
+        for (var value in this._getMatchesOfBoard(board)) {
+            if (this._getMatchesOfBoard(board).hasOwnProperty(value) && this._getMatchesOfBoard(board)[value] === 2) {
                 ++pairNumber;
             }
         }
@@ -576,12 +582,12 @@ define([
      * @returns {boolean}
      * @private
      */
-    Poker.prototype._isOnePair = function () {
+    Poker.prototype._isOnePair = function (board) {
         var result,
             pairNumber = 0;
 
-        for (var value in this._boardsMatches) {
-            if (this._boardsMatches.hasOwnProperty(value) && this._boardsMatches[value] === 2) {
+        for (var value in this._getMatchesOfBoard(board)) {
+            if (this._getMatchesOfBoard(board).hasOwnProperty(value) && this._getMatchesOfBoard(board)[value] === 2) {
                 ++pairNumber;
             }
         }
