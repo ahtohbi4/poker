@@ -39,8 +39,6 @@ if (window.location.search.match(/(?:\?|&|&amp;)env=dev/i)) {
             'spec/hands.spec'
         ], function ($) {
             $('body').append('<link rel="stylesheet" href="lib/jasmine/lib/jasmine-2.4.1/jasmine.css">');
-
-            window.onload();
         });
     });
 }
