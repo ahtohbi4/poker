@@ -13,6 +13,11 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, .7), 0 0 5px rgba(0, 0, 0, .4);
     transition: all 200ms cubic-bezier(.5, 0, .5, 1) 10ms;
 }
+@media (max-width: 400px) {
+    .button {
+        padding: 9px 10px;
+    }
+}
 .button:hover,
 .button:focus {
     box-shadow: 0 0 2px rgba(0, 0, 0, .7), 0 0 5px rgba(0, 0, 0, .4), inset 0 -19px 18px #acdd00;

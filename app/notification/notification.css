@@ -5,5 +5,7 @@
     margin-bottom: 27px;
 }
 .notification__message {
+    font-size: 1.8rem;
+    line-height: 1.8rem;
     text-align: center;
 }
