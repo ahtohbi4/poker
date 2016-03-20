@@ -404,24 +404,48 @@ define([
         return result;
     };
 
+    /**
+     * @method - Sort array from cards passed as parameter
+     * @param {array} board - Array of objects Card
+     * @returns {array}
+     * @private
+     */
     Poker.prototype._getSortedBoard = function (board) {
         return board.sort(function (a, b) {
             return (a.value - b.value);
         });
     };
 
+    /**
+     * @method - Get array from cards passed as parameter without Jokers
+     * @param {array} board - Array of objects Card
+     * @returns {array}
+     * @private
+     */
     Poker.prototype._getNoJokersBoard = function (board) {
         return this._getSortedBoard(board).filter(function (card) {
             return (card.value !== 0);
         });
     };
 
+    /**
+     * @method - Get array of Jokers from cards passed as parameter
+     * @param {array} board - Array of objects Card
+     * @returns {array}
+     * @private
+     */
     Poker.prototype._getJokersBoard = function (board) {
         return this._getSortedBoard(board).filter(function (card) {
             return (card.value === 0);
         });
     };
 
+    /**
+     * @method - Get object of Card's value as keys and count of matches as values
+     * @param {array} board - Array of objects Card
+     * @returns {object}
+     * @private
+     */
     Poker.prototype._getMatchesOfBoard = function (board) {
         var result = {};
 
@@ -448,6 +472,7 @@ define([
 
     /**
      * @method - Check for "Straight flush"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
@@ -461,6 +486,7 @@ define([
 
     /**
      * @method - Check for "Four of a kind"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
@@ -478,6 +504,7 @@ define([
 
     /**
      * @method - Check for "Full house"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
@@ -498,6 +525,7 @@ define([
 
     /**
      * @method - Check for "Flush"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
@@ -513,6 +541,7 @@ define([
 
     /**
      * @method - Check for "Straight"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
@@ -542,6 +571,7 @@ define([
 
     /**
      * @method - Check for "Three of a kind"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
@@ -559,6 +589,7 @@ define([
 
     /**
      * @method - Check for "Two pair"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
@@ -579,6 +610,7 @@ define([
 
     /**
      * @method - Check for "One pair"
+     * @param {array} board - Array of objects Card
      * @returns {boolean}
      * @private
      */
