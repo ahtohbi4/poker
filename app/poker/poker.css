@@ -44,11 +44,11 @@
 }
 .poker__card_selectable {
     cursor: pointer;
-    transform: translateY(-20px);
-    transition: transform 300ms;
+    top: -20px;
+    transition: top 50ms;
 }
 .poker__card_selected {
-    transform: translateY(0);
+    top: 0;
     animation: poker-card-selected-blink 1s infinite alternate;
     background-color: #ffd4a4;
 }

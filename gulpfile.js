@@ -5,7 +5,7 @@ var del = require('del');
 var postcss = require('gulp-postcss');
 var atImport = require('postcss-import');
 var autoprefixer = require('autoprefixer');
-var cssnano = require('cssnano');
+var csso = require('postcss-csso');
 
 gulp.task('clean-css', function () {
     return del([
@@ -29,7 +29,7 @@ gulp.task('css', [
             autoprefixer({
                 browsers: ['last 5 version']
             }),
-            cssnano()
+            csso()
         ]))
         .pipe(gulp.dest('./compiled/css'));
 });
