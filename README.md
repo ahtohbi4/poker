@@ -8,7 +8,10 @@ Poker
 [codacy-img]: https://api.codacy.com/project/badge/grade/49f010d195d2435a8b0037d78bb8ef46
 [codacy]: https://www.codacy.com/app/alexandr-post/poker
 
-> Poker game for single player. Free, without registration, no SMS.
+> Poker game for single player http://ahtohbi4.github.io/poker/.
+
+Details
+--
 
 #### Architecture
  * [GitHub](https://github.com/) to host repository;
@@ -25,3 +28,10 @@ Poker
  * [Jasmine](http://jasmine.github.io/) for BDD methodology;
  * [Travis CI](https://travis-ci.org/) for automatically validation HTML code;
  * [Codacy](https://www.codacy.com) to automatically code review JavaScript and CSS.
+
+Developing Mode
+--
+
+To see the game in developing mode jast open it with GET-parameter `?env=dev`:
+
+http://ahtohbi4.github.io/poker/?env=dev

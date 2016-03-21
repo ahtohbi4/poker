@@ -1,5 +1,5 @@
 {
-  "name": "poker",
+  "name": "poker.js",
   "version": "1.0.0",
   "description": "Poger Game with require.js",
   "main": "index.js",
@@ -8,6 +8,12 @@
     "type": "git",
     "url": "git+https://github.com/ahtohbi4/poker.git"
   },
+  "keywords": [
+    "poker",
+    "game",
+    "javascript",
+    "requirejs"
+  ],
   "author": "Alexandr Antonov",
   "license": "MIT",
   "bugs": {
