@@ -24,7 +24,13 @@
     content: attr(data-currency);
 }
 .poker__notification {
+    position: relative;
     flex-grow: 1;
+}
+.poker__notification-container {
+    position: absolute;
+    bottom: 27px;
+    width: 100%;
 }
 .poker__board {
     display: flex;
