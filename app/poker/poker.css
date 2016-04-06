@@ -34,6 +34,7 @@
 }
 .poker__board {
     display: flex;
+    height: 200px;
     flex-shrink: 0;
     flex-direction: row-reverse;
     justify-content: space-around;
@@ -42,6 +43,7 @@
 }
 @media (max-width: 400px) {
     .poker__board {
+        height: 160px;
         padding: 0 30px;
     }
 }
@@ -68,6 +70,7 @@
 /* .poker__controls */
 .poker__controls {
     display: flex;
+    height: 45px;
     flex-shrink: 0;
     justify-content: space-around;
     margin-bottom: 2.7rem;
