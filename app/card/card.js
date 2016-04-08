@@ -47,6 +47,7 @@ define([
     /**
      * @method
      * @returns {Card}
+     * @public
      */
     Card.prototype.turnFaceUp = function (isFaceUp) {
         var _this = this;
