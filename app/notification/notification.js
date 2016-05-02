@@ -10,7 +10,7 @@ define([
      * @property {number} _FADING_OUT_SPEED
      */
     function Notification() {
-        this._OPACITY_FOR_DISABLED = 0.3,
+        this._OPACITY_FOR_DISABLED = 0.3;
         this._LIFETIME_OF_DISABLED = 5000;
         this._FADING_OUT_SPEED = 1000;
 
