@@ -8,7 +8,7 @@ Poker
 [codacy-img]: https://api.codacy.com/project/badge/grade/49f010d195d2435a8b0037d78bb8ef46
 [codacy]: https://www.codacy.com/app/alexandr-post/poker
 [bitHound-img]: https://www.bithound.io/github/ahtohbi4/poker/badges/score.svg
-[bitHound]: https://www.codacy.com/app/alexandr-post/poker
+[bitHound]: https://www.bithound.io/github/ahtohbi4/poker
 
 > Poker game for single player http://ahtohbi4.github.io/poker/.
 
