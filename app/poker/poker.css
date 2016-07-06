@@ -10,13 +10,13 @@
 }
 .poker__deposit {
     position: absolute;
-    top: 9px;
+    top: 14px;
     right: 0;
     font-size: 1.8rem;
 }
 .poker__bet {
     position: absolute;
-    top: 36px;
+    top: 32px;
     right: 0;
     font-size: 1.8rem;
 }
