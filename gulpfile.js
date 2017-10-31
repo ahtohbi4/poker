@@ -1,47 +1,54 @@
 'use strict';
 
-var gulp = require('gulp');
-var del = require('del');
-var postcss = require('gulp-postcss');
-var atImport = require('postcss-import');
-var autoprefixer = require('autoprefixer');
-var csso = require('postcss-csso');
+const gulp = require('gulp');
 
-gulp.task('clean-css', function () {
-    return del([
-        'compiled/css'
-    ]);
-});
+const atImport = require('postcss-import');
+const autoprefixer = require('autoprefixer');
+const csso = require('postcss-csso');
+const del = require('del');
+const postcss = require('gulp-postcss');
+const sourcemaps = require('gulp-sourcemaps');
 
-gulp.task('clean', function () {
-    return del([
-        'compiled'
-    ]);
-});
+const TASK_NAME_DEFAULT = 'default';
+const TASK_NAME_CLEAN = 'clean';
+const TASK_NAME_CLEAN_CSS = 'clean-css';
+const TASK_NAME_CSS = 'css';
+const TASK_NAME_WATCH = 'watch';
 
-gulp.task('css', [
-    'clean-css'
-], function () {
-    return gulp
+gulp.task(TASK_NAME_CLEAN_CSS, () => del([
+    'compiled/css',
+]));
+
+gulp.task(TASK_NAME_CLEAN, () => del([
+    'compiled',
+]));
+
+gulp.task(
+    TASK_NAME_CSS,
+    [
+        TASK_NAME_CLEAN_CSS,
+    ],
+    () => gulp
         .src('./app/app.css')
+        .pipe(sourcemaps.init())
         .pipe(postcss([
             atImport(),
             autoprefixer({
-                browsers: ['last 5 version']
+                browsers: ['last 5 version'],
             }),
-            csso()
+            csso(),
         ]))
-        .pipe(gulp.dest('./compiled/css'));
-});
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('./compiled/css')));
 
-gulp.task('default', [
-    'css'
+gulp.task(TASK_NAME_DEFAULT, [
+    TASK_NAME_CSS,
 ]);
 
-gulp.task('watch', function () {
+gulp.task(TASK_NAME_WATCH, () => {
     gulp.watch([
-        'app/**/*.css'
+        'app/**/*.css',
     ], [
-        'css'
+        TASK_NAME_CSS,
     ]);
 });

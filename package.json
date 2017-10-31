@@ -25,8 +25,11 @@
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.1.0",
-    "normalize.css": "^4.0.0",
+    "gulp-sourcemaps": "^2.6.1",
     "postcss-csso": "^1.0.1",
     "postcss-import": "^8.0.2"
+  },
+  "dependencies": {
+    "normalize.css": "^7.0.0"
   }
 }
